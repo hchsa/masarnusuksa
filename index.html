@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title data-i18n="pageTitle">تطبيق حجاج مسار</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: IBM Plex Sans Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:100;400;500;600;700&family=IBM+Plex+Sans+Arabic:100;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Tipografi & Latar Belakang */
+        body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, div, a {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+        }
+        
+        /* Tipografi Nipis */
+        .thin-text {
+            font-family: 'IBM Plex Sans Arabic', sans-serif; 
+             font-weight: 100;
+             -webkit-font-smoothing: antialiased;
+        }
+
+        /* Menyembunyikan Scrollbar */
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Iframe Peta Responsive */
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Kelas Latar Belakang Statik */
+        .static-bg {
+            background-image: url('content-bg-rtl.8858e1cb6680e339.svg'), url('https://drive.google.com/thumbnail?id=1V4dEdR0MCuIOyINeEkdr54A4CF50CCgF&sz=w2000');
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: 1920px, 480px;
+            background-position: top left;
+        }
+
+        .tab-container {
+            overscroll-behavior-x: contain;
+        }
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+    </style>
+</head>
+
+<!-- Body kini memenuhkan 100% skrin di semua peranti -->
+<body class="min-h-screen w-full bg-[#FAFAFA] m-0 p-0 overflow-hidden text-gray-800">
+
+    <!-- Container Utama: 100% full screen pada Mobile, Tablet, Laptop, dan Desktop -->
+    <div id="app-container" class="w-full h-[100dvh] relative overflow-hidden transition-all duration-300 flex flex-col text-start rtl:text-right">
+        
+        <!-- Latar Belakang Aplikasi (Statik) -->
+        <div class="absolute inset-[0px] z-0 pointer-events-none overflow-hidden">
+            <div class="absolute inset-[0px] static-bg rtl:scale-x-100 ltr:scale-x-[-1] opacity-60"></div>
+            <div class="absolute inset-[0px] bg-gray-100 opacity-10 lg:opacity-0"></div>
+        </div>
+
+        <!-- Ruang Kandungan Boleh Skrol -->
+        <div class="flex-1 w-full overflow-y-auto hide-scroll relative z-10 flex flex-col pb-[120px] lg:pb-[80px]">
+            
+            <!-- Header (Lebar Maksimum 1920px dengan padding yang sekata dari 375px) -->
+            <header class="pt-[16px] px-[16px] sm:px-[24px] lg:px-[32px] 2xl:px-[64px] pb-[0] flex items-center justify-between relative z-50 w-full max-w-[1920px] mx-auto lg:pt-[16px] mb-[0]">
+                <!-- Logo -->
+                <div class="bg-transparent rounded-[12px]">
+                    <img src="https://drive.google.com/thumbnail?id=1qPW0CD4g2l4FKDaRUfpimewQ7H9tez3A&sz=w2000" alt="تصريح" class="w-[120px] sm:w-[135.95px] h-auto object-contain" />
+                </div>
+                
+                <!-- Language Toggle -->
+                <div class="relative text-right mt-[8px]" id="lang-container" dir="ltr">
+                    <button id="lang-toggle-btn" onclick="toggleDropdown()" class="flex items-center justify-center gap-[6px] border-[0px] px-[8px] py-[4px] h-[32px] bg-transparent cursor-pointer">
+                        <i data-lucide="globe" class="w-[20px] sm:w-[22px] h-[20px] sm:h-[22px] text-black pointer-events-none shrink-0"></i>
+                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-semibold text-gray-600 pointer-events-none">AR</span>
+                        <i id="lang-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-gray-800 transition-transform duration-300 pointer-events-none shrink-0"></i>
+                    </button>
+                    
+                    <div id="lang-dropdown" class="hidden absolute right-[0px] top-full mt-[8px] w-[112px] bg-white rounded-[12px] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-[6px]">
+                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-semibold transition-colors" data-i18n="langAr">العربية</button>
+                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-semibold transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Tabs (Sembunyi di Desktop - lg:hidden) -->
+            <div class="px-[16px] sm:px-[24px] mb-[24px] mt-[16px] relative z-10 lg:hidden">
+                <div class="flex w-full bg-[#ebebeb] rounded-[18px] overflow-hidden h-[50px] sm:h-[55px]">
+                    <button id="tab-main-pilgrim" onclick="switchMainTab('pilgrim')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-[#fff] bg-[#101522] border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabPilgrim">
+                        بيانات الحاج
+                    </button>
+                    <button id="tab-main-services" onclick="switchMainTab('services')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabServices">
+                        الخدمات        
+                    </button>
+                </div>
+            </div>
+
+            <!-- WRAPPER DESKTOP & WUXGA -->
+            <div class="flex flex-col lg:flex-row w-full max-w-[1920px] mx-auto lg:pt-[16px] lg:px-[32px] 2xl:px-[64px] lg:gap-[24px] flex-1">
+                
+                <!-- ================= SECTION 1: PILGRIM DATA ================= -->
+                <!-- Di Desktop, ia mengambil ruang utama (~66.5%) -->
+                <div id="section-pilgrim" class="px-[16px] sm:px-[24px] lg:px-[0] pb-[24px] w-full lg:w-[66.5%]">
+                    
+                    <!-- Card Profil Jemaah -->
+                    <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] shadow-sm mb-[16px] border border-gray-100 relative z-10 overflow-hidden">
+                        
+                        <!-- Gambar & Info -->
+                        <div class="flex flex-row items-center gap-[12px] sm:gap-[16px] mb-[20px]">
+                            
+                            <!-- Gambar Profil -->
+                            <div class="w-[80px] h-[96px] sm:w-[100px] sm:h-[115px] lg:w-[110px] lg:h-[130px] shrink-0 bg-gray-100 rounded-[12px] overflow-hidden border-[3px] border-[#4285F4] shadow-sm">
+                                <img id="profile-img" src="https://drive.google.com/thumbnail?id=1FHj5_AItrHZE74785Bm0gy_u5oaT0LPU&sz=w2000" alt="Pilgrim" class="w-full h-full object-cover" />
+                            </div>
+
+                            <!-- Info Ringkas -->
+                            <div class="flex-1 min-w-0 flex flex-col justify-center">
+                                
+                                <div class="flex flex-row items-center gap-[8px] sm:gap-[10px]">
+                                    <h2 class="text-[18px] sm:text-[clamp(16px,2.5vw,26px)] font-normal text-[#334155] m-[0px] text-start truncate" data-i18n="pilgrimName">HASBULLAH BIN HASSAN</h2>
+                                    <img src="https://drive.google.com/thumbnail?id=1iK1Kd_1HL6CxwN_wa79h_IeCSoswbEGe&sz=w2000" alt="Verified" class="w-[20px] sm:w-[26px] h-[20px] sm:h-[26px] shrink-0 object-contain" />
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <hr class="border border-gray-100 mb-[20px] sm:mb-[24px] -mx-[4px]">
+
+                        <!-- Butiran (Disesuaikan Gap Untuk 375px Skrin Kecil) -->
+                        <div class="grid grid-cols-2 gap-y-[16px] sm:gap-y-[20px] gap-x-[12px] sm:gap-x-[24px] w-full text-[13px] sm:text-[14px]">
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPilgrimNo">رقم الحاج</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">447050103011886</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblGender">الجنس</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valGender">ذكر</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblBirth">تاريخ الميلاد</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valBirth">21/03/1961</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblNationality">الجنسية</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valNationality">ماليزيا</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPassport">رقم الجواز</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valPassport">A72053133</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPackage">نوع الباقة</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valPackage">حجاج خارج مجموعات</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblVisa">رقم التأشيرة</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">6163010506</p>
+                            </div>
+                            <div>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblCountry">بلد القدوم</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valCountry">مملكة ماليزيا الاتحادية</p>
+                            </div>
+                            <div class="col-span-2 sm:col-span-1">
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblBorder">رقم الحدود</p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">6226852520</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub Tabs -->
+                    <div class="relative w-full overflow-hidden mb-[16px] mt-[4px]">
+
+                        <button type="button" id="tab-scroll-prev" onclick="scrollTabs(-1)" class="hidden absolute top-0 bottom-[12px] rtl:right-0 ltr:left-0 w-[48px] bg-gradient-to-r rtl:from-transparent rtl:to-white ltr:from-white ltr:to-transparent flex items-center rtl:justify-end ltr:justify-start z-10 border-0 cursor-pointer text-gray-500 hover:text-gray-800 transition-colors">
+                            <i data-lucide="chevron-right" class="w-[20px] h-[20px] rtl:block ltr:hidden mt-[14px]"></i>
+                            <i data-lucide="chevron-left" class="w-[20px] h-[20px] rtl:hidden ltr:block mt-[14px]"></i>
+                        </button>
+
+                        <div id="tab-container" class="flex gap-[24px] sm:gap-[32px] w-full overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth px-[4px]">
+
+                            <button type="button" role="tab" id="tab-sub-provider" onclick="switchSubTab('provider')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-[#369A36] shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-[#008000] pb-[4px] transition-colors" data-i18n="subTabProvider">
+                                بيانات مقدم الخدمة
+                                </span>
+                            </button>
+
+                            <button type="button" role="tab" id="tab-sub-housing" onclick="switchSubTab('housing')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-gray-600 shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-transparent pb-[4px] transition-colors" data-i18n="subTabHousing">
+                                بيانات السكن
+                                </span>
+                            </button>
+                        </div>
+
+                        <button type="button" id="tab-scroll-next" onclick="scrollTabs(1)" class="hidden absolute top-0 bottom-[12px] rtl:left-0 ltr:right-0 w-[48px] bg-gradient-to-r rtl:from-white rtl:to-transparent ltr:from-transparent ltr:to-white flex items-center rtl:justify-start ltr:justify-end z-10 border-0 cursor-pointer text-gray-500 hover:text-gray-800 transition-colors">
+                            <i data-lucide="chevron-left" class="w-[20px] h-[20px] rtl:block ltr:hidden mt-[14px]"></i>
+                            <i data-lucide="chevron-right" class="w-[20px] h-[20px] rtl:hidden ltr:block mt-[14px]"></i>
+                        </button>
+
+                    </div>
+
+                    <!-- Content: Provider -->
+                    <div id="content-provider" class="block">
+                        <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[24px]">
+                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
+                            <hr class="border-t border-gray-200 mb-[20px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
+                            
+                            <div class="grid grid-cols-2 gap-y-[16px] gap-x-[12px] sm:gap-x-[20px] w-full mb-[24px]">
+                                <div class="flex flex-col gap-[6px]">
+                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblProviderCo">شركة تقديم الخدمة</p>
+                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valProviderCo">شركة فندق هوليدي إن بكة شخص واحد</p>
+                                </div>
+                                <div class="flex flex-col gap-[6px]">
+                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblHospMakkah">مركز الضيافة في مكة</p>
+                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valHospMakkah">مركز ضيافة نزلي (67)</p>
+                                </div>
+                                <div class="flex flex-col gap-[0px]">
+                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblHospMadinah">مركز الضيافة في المدينة</p>
+                                    <p class="hidden" data-i18n="valHospMadinah">-</p>
+                                </div>
+                                <div class="flex flex-col gap-[0px] mb-[0px]">
+                                    <p class="text-transparent text-[13px] font-semibold m-[0px]" data-i18n="lblSpl">رقم SPL</p>
+                                    <p class="font-semibold text-[13px] text-transparent tracking-wide m-[0px]" data-i18n="valSpl">32</p>
+                                </div>
+                            </div>
+
+                            <div class="w-full mb-[12px]">
+                                <p class="text-gray-600 text-[15px] sm:text-[16px] font-semibold m-[0px]" data-i18n="lblProviderLoc">مكان شركة تقديم الخدمة</p>
+                            </div>
+
+                            <div class="relative w-full h-[200px] sm:h-[252px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <iframe src="https://maps.google.com/maps?q=21.4162985,39.8606299&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                                <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                    <a href="https://www.google.com/maps/place/21%C2%B024'58.7%22N+39%C2%B051'38.3%22E/@21.4162985,39.8606299,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+                                        <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] object-contain"/>
+                                        <span class="text-[13px] sm:text-[14px] text-gray-700 font-normal" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content: Housing -->
+                    <div id="content-housing" class="hidden">
+                        <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[20px]">
+                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
+                            <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
+                    
+                            <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative item-center ltr:pl-[0px] sm:ltr:pl-[32px]">
+                                <button id="tab-loc-makkah" onclick="switchLocTab('makkah')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0">
+                                    <span class="inline-block border-b-[2px] border-[#1a855b] pb-[8px] transition-colors" data-i18n="locMakkah">مكة المكرمة</span>
+                                </button>
+                                <button id="tab-loc-madinah" onclick="switchLocTab('madinah')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                    <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locMadinah">المدينة المنورة</span>
+                                </button>
+                                <button id="tab-loc-mina" onclick="switchLocTab('mina')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                    <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locMina">منى</span>
+                                </button>
+                                <button id="tab-loc-arafat" onclick="switchLocTab('arafat')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                    <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locArafat">عرفات</span>
+                                </button>
+                            </div>
+
+                            <!-- Panel Makkah -->
+                            <div id="loc-makkah" class="block">
+                                <div class="flex items-start gap-[12px] mb-[16px]">
+                                    <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]">
+                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-normal text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMakkahHotel">
+                                        10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع
+                                    </p>
+                                </div>
+                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                    <iframe src="https://maps.google.com/maps?q=21.4312536,39.8300529&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B025'52.5%22N+39%C2%B049'48.2%22E/@21.4312536,39.8300529,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                                        
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel Madinah -->
+                            <div id="loc-madinah" class="hidden">
+                                <div class="flex items-start gap-[12px] mb-[16px]">
+                                    <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]" />
+                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-normal text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMadinahHotel">
+                                        10007095 - فندق اعمار رويال للخدمات الفندقية - بضاعة شارع الملك فيصل
+                                    </p>
+                                </div>
+                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                    <iframe src="https://maps.google.com/maps?q=24.4734394,39.6133089&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/24%C2%B028'24.4%22N+39%C2%B036'47.9%22E/@24.4734394,39.6133089,1156m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel Mina -->
+                            <div id="loc-mina" class="hidden">
+                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
+                                    <div class="flex flex-col gap-[4px]">
+                                        <div class="flex items-center gap-[8px] sm:gap-[12px]">
+                                            <img src="https://drive.google.com/thumbnail?id=16pVWjLwEkLf-qjRfn3Egi85ZarUNDrVZ&sz=w100" alt="Camp" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
+                                            <p class="text-[14px] sm:text-[16px] font-normal text-gray-600 m-[0px] -translate-y-[12px]" data-i18n="lblCampNo">رقم المخيم</p>
+                                        </div>
+                                        <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 text-transparent tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">-</span>
+                                    </div>
+                                    <div class="flex flex-col gap-[4px]">
+                                        <div class="flex items-center gap-[8px] sm:gap-[12px]">
+                                            <img src="https://drive.google.com/thumbnail?id=1O3ETWzSFsZOifdhV7QYDFcf1Hp6ZxMxG&sz=w100" alt="Street" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
+                                            <p class="text-[14px] sm:text-[16px] font-normal text-gray-600 m-[0px] -translate-y-[12px]" data-i18n="lblStreetNo">رقم الشارع</p>
+                                        </div>
+                                        <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">612</span>
+                                    </div>
+                                    <div class="flex flex-col gap-[4px]">
+                                        <div class="flex items-center gap-[8px] sm:gap-[12px]">
+                                            <img src="https://drive.google.com/thumbnail?id=1FjN1Q1qkKo8CHqAQYTW61UfjFr-KNgxm&sz=w100" alt="Gate" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[16px]" />
+                                            <p class="text-[14px] sm:text-[16px] font-normal text-gray-600 m-[0px] -translate-y-[16px]" data-i18n="lblGateNo">رقم البوابة</p>
+                                        </div>
+                                        <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[16px]">10</span>
+                                    </div>
+                                </div>
+                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                    <iframe src="https://maps.google.com/maps?q=21.4217833,39.893677&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B025'18.4%22N+39%C2%B053'37.2%22E/@21.4217833,39.893677,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Panel Arafat -->
+                            <div id="loc-arafat" class="hidden">
+                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
+                                    <div class="flex flex-col gap-[4px]">
+                                        <div class="flex items-center gap-[8px] sm:gap-[12px]">
+                                            <img src="https://drive.google.com/thumbnail?id=1FjN1Q1qkKo8CHqAQYTW61UfjFr-KNgxm&sz=w100" alt="Gate" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
+                                            <p class="text-[14px] sm:text-[16px] font-base text-gray-600 m-[0px] -translate-y-[12px] " data-i18n="lblGateNo">رقم البوابة</p>
+                                        </div>
+                                        <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">10</span>
+                                    </div>
+                                    <div class="flex flex-col gap-[4px]">
+                                        <div class="flex items-center gap-[8px] sm:gap-[12px]">
+                                            <img src="https://drive.google.com/thumbnail?id=1O3ETWzSFsZOifdhV7QYDFcf1Hp6ZxMxG&sz=w100" alt="Street" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
+                                            <p class="text-[14px] sm:text-[16px] font-base text-gray-600 m-[0px] -translate-y-[12px]" data-i18n="lblStreetNo">رقم الشارع</p>
+                                        </div>
+                                        <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">612</span>
+                                    </div>
+                                </div>
+                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                    <iframe src="https://maps.google.com/maps?q=21.3767959,39.9846318&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B022'36.5%22N+39%C2%B059'04.7%22E/@21.3767959,39.9846318,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-medium text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Telefon Penting -->
+                    <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 lg:mb-[80px]">
+                        <h3 class="text-[18px] lg:text-[22px] font-normal p-[4px] sm:p-[8px] text-gray-800 mb-[16px]" data-i18n="importantPhones">أرقام مهمة</h3>
+                        <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">  
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-[16px]">
+                            <!-- ITEM 1 -->
+                            <div class="flex flex-col gap-[0px]">
+                                <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="hajjMinistryPhone">التواصل مع وزارة الحج و العمره</p>
+                                <a href="tel:1966" class="flex items-center gap-[0px] no-underline">
+                                    <img src="https://drive.google.com/thumbnail?id=1cDPX9MNCP05RdKYOCv8VpujzUTOA7pSw&sz=w2000"
+                                         class="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rtl:rotate-0 ltr:rotate-90"/>
+                                    <span class="text-[#198754] font-normal text-[15px] sm:text-[16px]">1966</span>
+                                </a>
+                            </div>
+
+                            <!-- ITEM 2 -->
+                            <div class="flex flex-col gap-[0px]">
+                                <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="providerPhone">التواصل مع شركة تقديم الخدمة</p>
+                                <a href="tel:+9668001111415" class="flex items-center gap-[0px] no-underline">
+                                    <img src="https://drive.google.com/thumbnail?id=1cDPX9MNCP05RdKYOCv8VpujzUTOA7pSw&sz=w2000"
+                                         class="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rtl:rotate-0 ltr:rotate-90" />
+                                    <span class="text-[#198754] font-normal text-[15px] sm:text-[16px]">+966 8001111415</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div> <!-- END PILGRIM DATA -->
+                </div>
+
+                <!-- ================= SECTION 2: SERVICES ================= -->
+                <!-- Di Desktop, ia mengambil baki ruang -->
+                <div id="section-services" class="max-lg:hidden px-[16px] sm:px-[24px] lg:px-[0] pb-[24px] w-full lg:flex-1">
+                    
+                    <!-- Nusk Card Banner -->
+                    <div class="bg-[#DFF6E7] backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-lg relative overflow-hidden flex flex-col justify-center min-h-[170px]">
+                        <div class="absolute top-[0px] bottom-[0px] rtl:left-[0px] ltr:right-[0px] p-[16px] opacity-50 pointer-events-none z-0">
+                            <img src="https://masar.nusuk.sa/assets/images/nusk-card-bg.png" alt="Discount" class="h-full w-auto object-contain rtl:-scale-x-100" onerror="this.style.display='none'" />
+                        </div>
+                        
+                        <div class="relative z-1 w-full">
+                            <h3 class="text-[20px] sm:text-[26px] leading-[30px] sm:leading-[36px] text-start font-normal text-[#1a1a1a] mb-[10px] mx-[0px] mt-[0px] max-w-[100%]" data-i18n="nusukDiscountTitle">خصومات حصرية لحاملي بطاقة نسك</h3>
+                            <p class="text-[14px] sm:text-[16px] leading-[20px] text-start font-base text-[#555] mb-[24px] mx-[0px] mt-[14px] max-w-[100%]" data-i18n="nusukDiscountDesc">استمتع بعروض مميزة و خدمات بأسعار خاصة مصممة لك</p>
+                            <div>
+                               <a href="https://masar.nusuk.sa/nusuk-card-partner-offers" target="_blank" class="inline-flex items-center justify-center gap-2 bg-[#198754] text-[#fff] px-[20px] sm:px-[24px] py-[10px] sm:py-[12px] rounded-[8px] text-[15px] sm:text-[16px] font-normal shadow-sm no-underline flex-row transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                                 <span data-i18n="btnViewDiscount">عرض الخصومات</span>
+                                 <img src="https://drive.google.com/thumbnail?id=1eO8lYfD0Z_oQqceoASx9xeJxBQ2m_5Op&sz=w2000" class="w-[16px] h-[16px] object-contain ltr:rotate-180"/>
+                               </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Lost Pilgrim Card -->
+                    <div class="bg-white/95 backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-lg border border-gray-100 relative overflow-hidden flex flex-col justify-center min-h-[170px]">
+                        <div class="relative z-1 w-full">
+                            <h3 class="text-[20px] sm:text-[26px] leading-[30px] sm:leading-[36px] text-start font-normal text-[#1a1a1a] mb-[10px] mx-[0px] mt-[0px] max-w-[100%]" data-i18n="reportLostTitle" >الإبلاغ عن حاج ضائع</h3>
+                            <p class="text-[14px] sm:text-[16px] leading-[20px] text-start font-base text-[#555] mb-[24px] mx-[0px] mt-[0px] max-w-[100%]" data-i18n="reportLostDesc">ساعدنا في الوصول إلى الحاج من خلال تقديم بلاغ</p>
+                            <div class="text-start">
+                               <!-- State A: Default Submit Button -->
+                               <a id="btn-open-report" href="#" onclick="openReportModal(event)" class="inline-flex items-center justify-center gap-[8px] bg-[#198754] text-[#fff] px-[20px] sm:px-[24px] py-[10px] sm:py-[12px] rounded-[8px] text-[15px] sm:text-[16px] font-normal shadow-sm no-underline flex-row transition-all duration-300 hover:-translate-y-1 hover:shadow-[5px_5px_10px_-5px_rgba(25,135,84,0.5),-5px_5px_10px_-5px_rgba(25,135,84,0.5)] cursor-pointer">
+                                 <span data-i18n="btnSubmitReport">تقديم بلاغ</span>
+                                 <i data-lucide="arrow-left" class="inline-flex text-center gap-[8px] font-normal text-[16px] w-[18px] h-[18px] object-contain ltr:rotate-180"></i>
+                               </a>
+                               
+                               <!-- State B: Withdraw Button (Hidden Initially) -->
+                               <a id="btn-withdraw-report" href="#" onclick="withdrawReport(event)" class="hidden items-center justify-center gap-[8px] bg-white border border-[#198754] text-[#198754] px-[20px] sm:px-[24px] py-[10px] sm:py-[12px] rounded-[8px] text-[15px] sm:text-[16px] font-normal shadow-sm no-underline flex-row transition-all duration-300 hover:bg-[#E7F5EE] hover:-translate-y-1 hover:shadow-[5px_5px_10px_-5px_rgba(25,135,84,0.3),-5px_5px_10px_-5px_rgba(25,135,84,0.3)] cursor-pointer">
+                                 <span data-i18n="btnWithdrawReport">سحب البلاغ</span>
+                                 <i data-lucide="rotate-ccw" stroke-width="2" class="w-[16px] h-[16px] rotate-45"></i>
+                               </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health Certificate Accordion -->
+                    <div class="mb-[24px]">
+                        <button onclick="toggleHealthCert()" class="w-full flex flex-col bg-[#ECF8F5] backdrop-blur border border-[#afe0d4] rounded-[12px] p-[12px] shadow-lg cursor-pointer transition-all duration-300">
+                            <div class="flex gap-[10px] text-start mx-[20px]">
+                                <i data-lucide="stethoscope" class="w-[20px] h-[20px] text-[#256e5c]"></i>
+                                <span class="text-[15px] sm:text-[17px] font-normal text-[#256e5c]" data-i18n="healthCertBtnTitle">استعراض شهادة الاستطاعة الصحية الآن</span>
+                            </div>
+                            <div class="flex gap-[8px] mt-[6px] text-[#256e5c] w-full mx-[50px]">
+                                <span id="health-cert-status-text" class="text-[15px] sm:text-[17px] font-normal" data-i18n="healthCertStatusShow">عرض الشهادة الصحية</span>
+                                <i id="health-cert-icon" data-lucide="chevron-down" class="w-[20px] h-[20px]"></i>
+                            </div>
+                        </button>
+
+                        <div id="health-cert-content" class="hidden mt-[24px] p-[16px] sm:p-[20px] bg-gradient-to-b from-[#FFFDF9] to-white backdrop-blur rounded-[16px] shadow-lg relative overflow-hidden">
+                            <div class="relative z-10 w-full">
+                                <h3 class="text-[#D8A663] mx-[0px] text-[20px] sm:text-[clamp(22px,2.5vw,28px)] max-w-[767.98px] font-normal mb-[20px] leading-32px text-center truncate" data-i18n="healthCertTitle">شهادة الاستطاعة الصحية</h3>
+                                <p class="text-[14px] sm:text-[16px] font-normal text-gray-700 mx-[0px] mb-[20px] leading-relaxed text-start" data-i18n="healthCertCertifies">يشهد مكتب شؤون حجاج ماليزيا</p>
+                                <p class="text-[14px] sm:text-[16px] font-normal mx-[0px] mb-[20px] text-center p-[0px] rounded-[8px] flex flex-wrap text-start gap-[8px]">
+                                    <span class="text-[14px] sm:text-[16px] text-gray-700 font-normal" data-i18n="healthCertThatPilgrim">بأن الحا ج/ة</span> 
+                                    <span class="text-[14px] sm:text-[16px] text-gray-800 font-normal" data-i18n="pilgrimName">HASBULLAH BIN HASSAN</span>
+                                </p>
+                                <p>
+                                    <span class="text-[14px] sm:text-[16px] text-gray-700 font-normal mb-[20px]" data-i18n="healthCertNationality">الذي يحمل الجنسية</span>
+                                    <span class="text-[14px] sm:text-[16px] text-gray-800 font-normal mb-[20px]" data-i18n="valNationality">ماليزيا</span>
+                                </p>
+                                <p class="text-[16px] sm:text-[18px] font-normal text-gray-800 mx-[0px] mt-[20px] mb-[20px] leading-relaxed" data-i18n="healthCertDesc">مستطيع صحياً لأداء فريضة الحج، ولا يعاني من أي من الأمراض أو الحالات الصحية التالية:</p>
+
+                                <div class="flex flex-col bg-[#ecf8f5] p-[16px] sm:p-[22px] rounded-[18px] border border-[#b0e0d4] gap-[12px] mb-[20px]">
+                                    <div class="bg-white rounded-[14px] mt-[20px] border border-[#b0e0d4] shadow-none p-[14px]">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond1">فشل أحد الأعضاء الرئيسية (مثل: فشل الكلى الذي يستدعي الغسيل، أو فشل القلب الذي تظهر أعراضه مع أقل جهد بدني، أو أمراض الرئة المزمنة التي تتطلب استخدام الأوكسجين بشكل متقطع أو مستمر، أو تليف الكبد المصحوب بعلامات الفشل الكبدي)</span>
+                                        </p>
+                                    </div>
+                                    <div class="bg-white p-[12px] rounded-[14px] border border-[#b0e0d4] shadow-none">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond2">الأمراض العصبية والنفسية الشديدة التي تعيق الإدراك أو المصحوبة بإعاقات حركية</span>
+                                        </p>
+                                    </div>
+                                    <div class="bg-white p-[12px] rounded-[14px] border border-[#b0e0d4] shadow-none">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond3">الشيخوخة المصحوبة بالخرف</span>
+                                        </p>
+                                    </div>
+                                    <div class="bg-white p-[12px] rounded-[14px] border border-[#b0e0d4] shadow-none">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond4">الحمل في الثلاثة أشهر الأخيرة، والحمل الخطر في جميع مراحل الحمل</span>
+                                        </p>
+                                    </div>
+                                    <div class="bg-white p-[12px] rounded-[14px] border border-[#b0e0d4] shadow-none">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond5">الأمراض المعدية النشطة ذات الأثر على الصحة العامة في الحشود البشرية (مثل السل الرئوي المفتوح، والحميات النزفية)</span>
+                                        </p>
+                                    </div>
+                                    <div class="bg-white p-[12px] rounded-[14px] border border-[#b0e0d4] shadow-none">
+                                        <p class="flex items-start text-start text-[13px] sm:text-[14px] font-normal text-gray-800 leading-[1.9] m-0">
+                                            <span class="inline-block w-[8px] h-[8px] shrink-0 bg-[#198754] rotate-45 rounded-[2px] mt-[9px] rtl:ml-[10px] ltr:mr-[10px]"></span>
+                                            <span class="flex-1" data-i18n="healthCertCond6">مرضى السرطان النشط الذين يتلقون العلاج الكيميائي أو الأدوية والإجراءات التي تُضعف المناعة بشدة</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="text-[14px] sm:text-[16px] font-normal leading-[1.9] text-gray-800 bg-none p-[4px] rounded-[8px] border border-none mx-[0px]" data-i18n="healthCertConclusion">وعليه، فقد تم منحه هذه الشهادة إقرارًا بسلامته الصحية واستطاعته على أداء المناسك دون خطر على صحته أو على صحة الآخرين.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Maps Section -->
+                    <div class="mb-[18px]">
+                        <h3 class="text-[20px] sm:text-[24px] font-normal text-gray-800 mx-[0px] mb-[18px]" data-i18n="interactiveMaps" dir="rtl">الخرائط التفاعلية</h3>
+                        
+                        <div class="flex flex-col gap-[20px] sm:gap-[24px]">
+                            
+                            <!-- MAP CARD 1: Masjid Haram -->
+                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[8px] overflow-hidden shadow-sm group border border-gray-100">
+                                <img src="https://drive.google.com/thumbnail?id=1ZP7FZKqWRnQiFRptbZ0pxQB4l6jAKVBd&sz=w2000" alt="المسجد الحرام" class="w-full h-full object-cover transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
+                                    <div class="text-[#fff] text-[16px] sm:text-[20px] font-normal pointer-events-auto" data-i18n="mapMasjidHaram">المسجد الحرام</div>
+                                </div>
+                                <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:left-[24px] sm:rtl:left-[32px] ltr:right-[24px] sm:ltr:right-[32px] flex items-center h-[44px] pointer-events-none">
+                                    <a href="https://www.google.com/maps/place/21%C2%B025'25.2%22N+39%C2%B049'22.0%22E/@21.4236579,39.8227847,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center w-[40px] sm:w-[48px] h-[40px] sm:h-[48px] rounded-full bg-[#198754] shadow-md transition-all duration-300 hover:bg-[#146c49] hover:scale-105 active:scale-95">
+                                        <i data-lucide="arrow-left" stroke-width="1.75" class="w-[24px] sm:w-[32px] h-[24px] sm:h-[32px] text-white ltr:rotate-0"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- MAP CARD 2: Masjid Nabawi -->
+                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[8px] overflow-hidden shadow-sm group border border-gray-100">
+                                <img src="https://drive.google.com/thumbnail?id=1OUKM5eybkWQxgnTc1xtw21hd7dPcWRke&sz=w2000" alt="المسجد النبوي" class="w-full h-full object-cover transition-transform duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
+                                    <div class="text-[#fff] text-[16px] sm:text-[20px] font-normal pointer-events-auto" data-i18n="mapMasjidNabawi">المسجد النبوي</div>
+                                </div>
+                                <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:left-[24px] sm:rtl:left-[32px] ltr:right-[24px] sm:ltr:right-[32px] flex items-center h-[44px] pointer-events-none">
+                                    <a href="https://www.google.com/maps/place/24%C2%B028'02.7%22N+39%C2%B036'30.5%22E/@24.4674061,39.6084840,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center w-[40px] sm:w-[48px] h-[40px] sm:h-[48px] rounded-full bg-[#198754] shadow-md transition-all duration-300 hover:bg-[#146c49] hover:scale-105 active:scale-95">
+                                        <i data-lucide="arrow-left" stroke-width="1.75" class="w-[24px] sm:w-[32px] h-[24px] sm:h-[32px] text-white ltr:rotate-0"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div> <!-- END SERVICES -->
+            </div> <!-- END WRAPPER DESKTOP -->
+            
+        </div> <!-- END SCROLLABLE AREA -->
+
+        <!-- Footer -->
+        <div class="absolute bottom-0 inset-x-0 z-[50] w-full bg-white/95 backdrop-blur border-t border-gray-200 shadow-[0_-6px_20px_rgba(0,0,0,0.08)]">
+            <div class="max-w-[1920px] mx-auto text-center text-[12px] sm:text-[14px] text-gray-500 py-[12px] px-[16px] sm:px-[20px] lg:px-[32px]" data-i18n="footerText">
+                تحت إشراف لجنة الحج العليا
+            </div>
+        </div>
+
+        <!-- MODAL: REPORT LOST PILGRIM -->
+        <div id="report-modal" class="hidden absolute inset-0 z-[100] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
+            <div class="bg-white w-full sm:max-w-[452px] min-h-[192px] rounded-[24px] pt-[24px] pr-[16px] sm:pr-[20px] pb-[22px] pl-[16px] sm:pl-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col text-start border border-gray-100 max-h-[90vh] overflow-y-auto hide-scroll">
+                
+                <button type="button" onclick="closeReportModal()" class="absolute top-[24px] sm:top-[30px] left-[20px] sm:left-[28px] font-normal text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0 z-10">
+                    <i data-lucide="x" stroke-width="1.75" class="mx-[-4px] font-normal w-[24px] sm:w-[28px] h-[24px] sm:h-[28px]"></i>
+                </button>
+
+                <h3 class="text-[20px] sm:text-[24px] font-normal text-gray-800 m-[0px] ltr:mt-[32px] sm:ltr:mt-[0px] mb-[16px] sm:mb-[20px]" data-i18n="modalReportTitle">الإبلاغ عن حاج ضائع</h3>
+
+                <hr class="border-t border-gray-100 mb-[20px] sm:mb-[28px] -mx-[16px] sm:-mx-[20px]">
+                
+                <p class="font-base text-[18px] sm:text-[21px] text-gray-500 leading-snug sm:leading-9 mb-[20px] sm:mb-[28px]" data-i18n="modalReportDesc">يرجى إدخال رقم الجوال للتواصل معك للمساعدة في الوصول إلى الحاج</p>
+                
+                <form id="report-form" onsubmit="submitReportForm(event)" class="flex flex-col gap-[16px]" novalidate>
+                    <div class="flex flex-col gap-[8px] text-start">
+                        <label class="text-[16px] sm:text-[18px] font-base text-gray-700 flex gap-[4px] rtl:flex-row ltr:flex-row">
+                            <span data-i18n="lblMobileNumber">رقم الجوال</span>
+                            <span class="text-[#dc2626]">*</span>
+                        </label>
+                        <input type="text" id="report-mobile" required oninput="validateForm()" class="w-full h-[48px] sm:h-[56px] border border-[#85CFAB] mb-[4px] rounded-[16px] py-[12px] sm:py-[15px] px-[16px] text-[15px] sm:text-[16px] text-gray-800 bg-white transition-all focus:outline-none focus:border-[#85CFAB] focus:ring-[3px] focus:ring-[#E7F5EE] rtl:text-right ltr:text-left" data-i18n-placeholder="placeholderMobile" placeholder="ادخل رقم الجوال">
+                        <p id="mobile-error" class="hidden text-[#dc2626] text-[13px] sm:text-[14px] mt-[4px] text-start" data-i18n="errorMobileLength">يجب إدخال رقم جوال صحيح مكون من 10 أرقام</p>
+                    </div>
+
+                    <div class="flex flex-col gap-[8px] text-start">
+                        <label class="text-[16px] sm:text-[18px] font-base text-gray-700 flex gap-[4px] rtl:flex-row ltr:flex-row">
+                            <span data-i18n="lblNotes">الملاحظات (اختياري)</span>
+                        </label>
+                        <textarea id="report-notes" maxlength="500" oninput="updateCharCount(); validateForm();" class="w-full h-[100px] sm:h-[132px] border border-[#bfc2c4] rounded-[16px] p-[16px] text-[15px] sm:text-[16px] text-gray-900 focus:outline-none focus:border-[#85CFAB] focus:ring-[3px] focus:ring-[#E7F5EE] transition-all bg-white resize-none rtl:text-right ltr:text-left" data-i18n-placeholder="placeholderNotes" placeholder="ادخل الملاحظات"></textarea>
+                        <div class="text-[12px] sm:text-[13px] text-gray-400 mt-[1px] text-left" dir="ltr" id="char-count">0 / 500</div>
+                    </div>
+
+                    <button type="submit" id="submit-report-btn" class="w-full h-[48px] sm:h-[56px] bg-[#1b8354] text-[#fff] text-[16px] sm:text-[17px] font-medium rounded-[12px] mt-[8px] transition-colors pointer-events-none opacity-50" data-i18n="btnSend">إرسال</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MODAL: SUCCESS (Berjaya) -->
+        <div id="success-modal" class="hidden absolute inset-0 z-[110] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
+            <div class="bg-white w-full sm:max-w-[452px] min-h-[250px] sm:h-[326px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col text-center border border-gray-100">
+                <button type="button" onclick="closeSuccessModal()" class="absolute top-[20px] sm:top-[24px] left-[20px] sm:left-[24px] text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0">
+                    <i data-lucide="x" stroke-width="1.5" class="w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"></i>
+                </button>
+                <div class="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full bg-[#dff6e7] flex items-center justify-center mx-auto mb-[16px] sm:mb-[20px] mt-[24px] sm:mt-[36px]">
+                    <i data-lucide="check" stroke-width="2.5" class="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] text-[#198754]"></i>
+                </div>
+                <h3 class="text-[20px] sm:text-[22px] font-normal text-gray-800 m-[0px] mb-[12px] sm:mb-[16px]" data-i18n="successTitle">تم إرسال البلاغ بنجاح</h3>
+                <p class="text-[14px] sm:text-[15px] font-base text-gray-500 leading-snug sm:leading-none mb-[8px]" data-i18n="successDesc">من الممكن أن يتم التواصل معك للمساعدة في<br>الوصول إلى الحاج</p>
+            </div>
+        </div>
+
+        <!-- MODAL: WITHDRAW SUCCESS (Berjaya Batal) -->
+        <div id="withdraw-success-modal" class="hidden absolute inset-0 z-[110] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
+            <div class="bg-white w-full sm:max-w-[452px] min-h-[200px] sm:h-[236px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col justify-center text-center border border-gray-100">                
+                <button type="button" onclick="closeWithdrawSuccessModal()" class="absolute top-[20px] sm:top-[24px] left-[20px] sm:left-[24px] text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0">
+                    <i data-lucide="x" stroke-width="1.5" class="w-[20px] h-[20px] sm:w-[24px] sm:h-[24px]"></i>
+                </button>
+                <div class="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-full bg-[#dff6e7] flex items-center justify-center mx-auto mb-[16px] sm:mb-[24px] mt-[12px] sm:mt-[16px]">
+                    <i data-lucide="check" stroke-width="2.5" class="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] text-[#198754]"></i>
+                </div>
+                <h3 class="text-[20px] sm:text-[22px] font-normal text-gray-800 m-[0px] mb-[12px] sm:mb-[16px]" data-i18n="withdrawSuccessTitle">تم سحب البلاغ بنجاح</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // MASUKKAN GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRgPEpdWXLLCd--IXOj2-cfqfceMJK3hAjLiX7v_tL8EO1s0tG8vSDWom6Z8tA_WB6/exec"; // <-- GANTIKAN URL ANDA DI SINI!
+
+        // Dictionary Terjemahan
+        const translations = {
+            'AR': {
+                'pageTitle': 'تطبيق حجاج مسار',
+                'langAr': 'العربية',
+                'langEn': 'English',
+                'mainTabServices': 'الخدمات',
+                'mainTabPilgrim': 'بيانات الحاج',
+                'pilgrimName': 'HASBULLAH BIN HASSAN',
+                'pilgrimType': 'حاج عادي',
+                'lblPilgrimNo': 'رقم الحاج',
+                'valGender': 'ذكر',
+                'lblGender': 'الجنس',
+                'lblBirth': 'تاريخ الميلاد',
+                'lblNationality': 'الجنسية',
+                'valNationality': 'ماليزيا',
+                'lblPassport': 'رقم الجواز',
+                'lblPackage': 'نوع الباقة',
+                'valPackage': 'حجاج خارج مجموعات',
+                'lblVisa': 'رقم التأشيرة',
+                'lblCountry': 'بلد القدوم',
+                'valCountry': 'مملكة ماليزيا الاتحادية',
+                'lblBorder': 'رقم الحدود',
+                'subTabProvider': 'بيانات مقدم الخدمة',
+                'subTabHousing': 'بيانات السكن',
+                'hdrProvider': 'بيانات مقدم الخدمة',
+                'lblProviderCo': 'شركة تقديم الخدمة',
+                'valProviderCo': 'شركة فندق هوليدي إن بكة شخص واحد',
+                'lblHospMakkah': 'مركز الضيافة في مكة',
+                'lblHospMadinah': 'مركز الضيافة في المدينة',
+                'lblSpl': 'رقم SPL',
+                'lblProviderLoc': 'مكان شركة تقديم الخدمة',
+                'btnDirection': 'الإتجاه للموقع',
+                'hdrHousing': 'تفاصيل سكن الحاج',
+                'locMakkah': 'مكة المكرمة',
+                'locMadinah': 'المدينة المنورة',
+                'locMina': 'منى',
+                'locArafat': 'عرفات',
+                'descMakkahHotel': '10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع',
+                'descMadinahHotel': '10007095 - فندق اعمار رويال للخدمات الفندقية - بضاعة شارع الملك فيصل',
+                'lblCampNo': 'رقم المخيم',
+                'lblStreetNo': 'رقم الشارع',
+                'lblGateNo': 'رقم البوابة',
+                'importantPhones': 'أرقام مهمة',
+                'hajjMinistryPhone': 'التواصل مع وزارة الحج و العمره',
+                'providerPhone': 'التواصل مع شركة تقديم الخدمة',
+                'nusukDiscountTitle': 'خصومات حصرية لحاملي بطاقة نسك',
+                'nusukDiscountDesc': 'استمتع بعروض مميزة و خدمات بأسعار خاصة مصممة لك',
+                'btnViewDiscount': 'عرض الخصومات',
+                'reportLostTitle': 'الإبلاغ عن حاج ضائع',
+                'reportLostDesc': 'ساعدنا في الوصول إلى الحاج من خلال تقديم بلاغ',
+                'btnSubmitReport': 'تقديم بلاغ',
+                'healthCertBtnTitle': 'استعراض شهادة الاستطاعة الصحية الآن',
+                'healthCertStatusShow': 'عرض الشهادة الصحية',
+                'healthCertStatusHide': 'إخفاء الشهادة الصحية',
+                'healthCertTitle': 'شهادة الاستطاعة الصحية',
+                'healthCertCertifies': 'يشهد مكتب شؤون حجاج ماليزيا',
+                'healthCertThatPilgrim': 'بأن الحا ج/ة',
+                'healthCertNationality': 'الذي يحمل الجنسية',
+                'healthCertDesc': 'مستطيع صحياً لأداء فريضة الحج، ولا يعاني من أي من الأمراض أو الحالات الصحية التالية:',
+                'healthCertCond1': 'فشل أحد الأعضاء الرئيسية (مثل: فشل الكلى الذي يستدعي الغسيل، أو فشل القلب الذي تظهر أعراضه مع أقل جهد بدني، أو أمراض الرئة المزمنة التي تتطلب استخدام الأوكسجين بشكل متقطع أو مستمر، أو تليف الكبد المصحوب بعلامات الفشل الكبدي)',
+                'healthCertCond2': 'الأمراض العصبية والنفسية الشديدة التي تعيق الإدراك أو المصحوبة بإعاقات حركية',
+                'healthCertCond3': 'الشيخوخة المصحوبة بالخرف',
+                'healthCertCond4': 'الحمل في الثلاثة أشهر الأخيرة، والحمل الخطر في جميع مراحل الحمل',
+                'healthCertCond5': 'الأمراض المعدية النشطة ذات الأثر على الصحة العامة في الحشود البشرية (مثل السل الرئوي المفتوح، والحميات النزفية)',
+                'healthCertCond6': 'مرضى السرطان النشط الذين يتلقون العلاج الكيميائي أو الأدوية والإجراءات التي تُضعف المناعة بشدة',
+                'healthCertConclusion': 'وعليه، فقد تم منحه هذه الشهادة إقرارًا بسلامته الصحية واستطاعته على أداء المناسك دون خطر على صحته أو على صحة الآخرين.',
+                'interactiveMaps': 'الخرائط التفاعلية',
+                'mapMasjidHaram': 'المسجد الحرام',
+                'mapMasjidNabawi': 'المسجد النبوي',
+                'footerText': 'تحت إشراف لجنة الحج العليا',
+                'fullScreenText': 'ملء الشاشة',
+                'modalReportTitle': 'الإبلاغ عن حاج ضائع',
+                'modalReportDesc': 'يرجى إدخال رقم الجوال للتواصل معك للمساعدة في الوصول إلى الحاج',
+                'lblMobileNumber': 'رقم الجوال',
+                'placeholderMobile': 'ادخل رقم الجوال',
+                'lblNotes': 'الملاحظات (اختياري)',
+                'placeholderNotes': 'ادخل الملاحظات',
+                'btnSend': 'إرسال',
+                'errorMobileLength': 'يجب إدخال رقم جوال صحيح مكون من 10 أرقام',
+                'successTitle': 'تم إرسال البلاغ بنجاح',
+                'successDesc': 'من الممكن أن يتم التواصل معك للمساعدة في الوصول إلى الحاج',
+                'btnWithdrawReport': 'سحب البلاغ',
+                'withdrawSuccessTitle': 'تم سحب البلاغ بنجاح'
+            },
+            'EN': {
+                'pageTitle': 'Masar Pilgrim App',
+                'langAr': 'العربية',
+                'langEn': 'English',
+                'mainTabServices': 'Services',
+                'mainTabPilgrim': 'Pilgrim Data',
+                'pilgrimName': 'HASBULLAH BIN HASSAN',
+                'pilgrimType': 'Normal Hajj',
+                'lblPilgrimNo': 'Pilgrim ID',
+                'valGender': 'Male',
+                'lblGender': 'Gender',
+                'lblBirth': 'Date of Birth',
+                'lblNationality': 'Nationality',
+                'valNationality': 'Malaysia',
+                'lblPassport': 'Passport number',
+                'lblPackage': 'Package type',
+                'valPackage': 'B2B Pilgrims',
+                'lblVisa': 'Visa number',
+                'lblCountry': 'Country of origin',
+                'valCountry': 'Malaysia',
+                'lblBorder': 'Border number',
+                'subTabProvider': 'Service provider information',
+                'subTabHousing': 'Housing information',
+                'hdrProvider': 'Service provider information',
+                'lblProviderCo': 'Service provider company',
+                'valProviderCo': 'Holiday Inn Bakkah Hotel Company One Person',
+                'lblHospMakkah': 'Makkah Guest Center',
+                'lblHospMadinah': 'Madinah Guest Center',
+                'lblSpl': 'SPL number',
+                'lblProviderLoc': 'Service provider location',
+                'btnDirection': 'Direction to the location',
+                'hdrHousing': 'Hajj housing details',
+                'locMakkah': 'Makkah',
+                'locMadinah': 'Madinah',
+                'locMina': 'Mina',
+                'locArafat': 'Arafat',
+                'descMakkahHotel': '10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع',
+                'descMadinahHotel': 'فندق اعمار رويال للخدمات الفندقية, بضاعة شارع الملك فيصل',
+                'lblCampNo': 'Camp Number',
+                'lblStreetNo': 'Street Number',
+                'lblGateNo': 'Gate Number',
+                'importantPhones': 'Important phones',
+                'hajjMinistryPhone': 'Hajj Ministry Contact Number',
+                'providerPhone': 'Service provider company contact number',
+                'nusukDiscountTitle': 'Exclusive discounts for Nusk card holders',
+                'nusukDiscountDesc': 'Enjoy special offers and services at exclusive prices designed for you',
+                'btnViewDiscount': 'Preview Discounts',
+                'reportLostTitle': 'Report lost pilgrim',
+                'reportLostDesc': 'Help us reach the pilgrim by submitting a report',
+                'btnSubmitReport': 'Submit report',
+                'healthCertBtnTitle': 'View the health certificate now',
+                'healthCertStatusShow': 'View health certificate',
+                'healthCertStatusHide': 'Hide health certificate',
+                'healthCertTitle': 'Health Capability Certificate',
+                'healthCertCertifies': 'It is hereby certified by Pilgrims Affairs Office Malaysia',
+                'healthCertThatPilgrim': 'that the pilgrim Mr./ Ms.',
+                'healthCertNationality': 'of nationality',
+                'healthCertDesc': 'is medically fit to perform the Hajj obligation and does not suffer from any diseases or health conditions listed below:',
+                'healthCertCond1': 'Failure of any major organ (e.g., complete kidney failure requiring dialysis, or heart failure that manifests with minimal effort, or advanced chronic lung diseases that require continuous oxygen use, or decompensated liver cirrhosis accompanied by signs of severe hepatic failure.)',
+                'healthCertCond2': 'Severe neurological and psychiatric disorders that impair cognition or are accompanied by motor disabilities.',
+                'healthCertCond3': 'Advanced frailty of senility.',
+                'healthCertCond4': 'Pregnancy in the last three months, high-risk pregnancy, or pregnancy at any stage accompanied by complications.',
+                'healthCertCond5': 'Infectious and communicable diseases that pose greater danger to public health, such as active pulmonary tuberculosis, open pulmonary conditions, and epidemic diseases.',
+                'healthCertCond6': 'Patients with active cancer undergoing intensive chemotherapy or medications and procedures that cause severe immunosuppression.',
+                'healthCertConclusion': 'Accordingly, this certificate has been granted as confirmation of medical fitness and the ability to perform the rituals without risk to the pilgrim\'s health or the health of others.',
+                'interactiveMaps': 'Interactive maps',
+                'mapMasjidHaram': 'The Grand Mosque',
+                'mapMasjidNabawi': 'The Prophet\'s Mosque',
+                'footerText': 'Under the supervision of the Supreme Hajj Committee',
+                'fullScreenText': 'Fullscreen',
+                'modalReportTitle': 'Report lost pilgrim',
+                'modalReportDesc': 'Please enter your mobile number so we can contact you to help reach the pilgrim',
+                'lblMobileNumber': 'Mobile Number',
+                'placeholderMobile': 'Enter mobile number',
+                'lblNotes': 'Notes (optional)',
+                'placeholderNotes': 'Enter notes',
+                'btnSend': 'Send',
+                'errorMobileLength': 'Please enter a valid 10-digit mobile number',
+                'successTitle': 'Report sent successfully',
+                'successDesc': 'We may contact you to help us reach the pilgrim',
+                'btnWithdrawReport': 'Withdraw report',
+                'withdrawSuccessTitle': 'Report withdrawn successfully'
+            }
+        };
+
+        let dbPilgrimData = null; // Simpan data dari database
+        let isHealthCertOpen = false;
+        let currentLanguage = 'AR';
+
+        // Logik Mengambil Data dari Pangkalan Data
+        async function fetchPilgrimData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pilgrimId = urlParams.get('id');
+
+            // Jika tiada ID dalam URL, biarkan default UI (jangan redirect)
+            if (!pilgrimId || !GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes("SILA_TAMPAL")) {
+                setLanguage(currentLanguage); 
+                return;
+            }
+
+            try {
+                const response = await fetch(`${GAS_WEB_APP_URL}?id=${pilgrimId}`);
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    dbPilgrimData = result.data;
+                    updateTranslationsWithDB(dbPilgrimData);
+                    
+                    // Kemaskini Gambar Profil
+                    if(dbPilgrimData.photoUrl) {
+                        const imgEl = document.getElementById('profile-img');
+                        if (imgEl) imgEl.src = dbPilgrimData.photoUrl;
+                    }
+                    
+                    // Kemas kini DOM selepas data masuk
+                    setLanguage(currentLanguage);
+
+                    // Mengemaskini nombor statik di dalam DOM
+                    const numbers = {
+                        'pilgrimNo': dbPilgrimData.pilgrimNo || '-',
+                        'visaNo': dbPilgrimData.visaNo || '-',
+                        'borderNo': dbPilgrimData.borderNo || '-'
+                    };
+
+                    setTimeout(() => {
+                        let content = document.body.innerHTML;
+                        content = content.replace('447050103011886', numbers.pilgrimNo)
+                                         .replace('6163010506', numbers.visaNo)
+                                         .replace('6226852520', numbers.borderNo);
+                        document.body.innerHTML = content;
+                    }, 100);
+
+                } else {
+                    // Jika ID tidak ditemui dalam Google Sheet
+                    window.location.href = "notfound.html";
+                }
+            } catch (error) {
+                console.error("Ralat mengambil data:", error);
+                window.location.href = "notfound.html";
+            }
+        }
+
+        // Memasukkan data DB ke dalam sistem bahasa (Translations)
+        function updateTranslationsWithDB(data) {
+            translations['AR']['pilgrimName'] = data.name || '-';
+            translations['AR']['pilgrimType'] = data.typeAr || '-';
+            translations['AR']['valGender'] = data.genderAr || '-';
+            translations['AR']['valBirth'] = data.birthDate || '-';
+            translations['AR']['valNationality'] = data.nationalityAr || '-';
+            translations['AR']['valPassport'] = data.passportNo || '-';
+            translations['AR']['valPackage'] = data.packageAr || '-';
+            translations['AR']['valCountry'] = data.countryAr || '-';
+            translations['AR']['valProviderCo'] = data.providerAr || '-';
+            
+            translations['EN']['pilgrimName'] = data.name || '-';
+            translations['EN']['pilgrimType'] = data.typeEn || '-';
+            translations['EN']['valGender'] = data.genderEn || '-';
+            translations['EN']['valBirth'] = data.birthDate || '-';
+            translations['EN']['valNationality'] = data.nationalityEn || '-';
+            translations['EN']['valPassport'] = data.passportNo || '-';
+            translations['EN']['valPackage'] = data.packageEn || '-';
+            translations['EN']['valCountry'] = data.countryEn || '-';
+            translations['EN']['valProviderCo'] = data.providerEn || '-';
+        }
+
+        // Init Icons
+        lucide.createIcons();
+
+        // Set Language Logic
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('lang-dropdown').classList.add('hidden');
+            document.getElementById('current-lang').textContent = lang;
+
+            // Reset chevron rotation
+            document.getElementById('lang-chevron').classList.remove('rotate-180');
+
+            // Tukar arah dokumen & bahasa (RTL <-> LTR)
+            document.documentElement.lang = lang.toLowerCase();
+            document.documentElement.dir = lang === 'AR' ? 'rtl' : 'ltr';
+
+            // Tukar posisi ikon Globe dan Chevron untuk EN
+            const toggleBtn = document.getElementById('lang-toggle-btn');
+            if (lang === 'EN') {
+                toggleBtn.classList.add('flex-row-reverse');
+            } else {
+                toggleBtn.classList.remove('flex-row-reverse');
+            }
+
+            // Tukar stail dropdown aktif
+            const arBtn = document.getElementById('lang-ar-btn');
+            const enBtn = document.getElementById('lang-en-btn');
+            
+            const activeClass = "block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors";
+            const inactiveClass = "block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100";
+
+            if (lang === 'AR') {
+                arBtn.className = activeClass;
+                enBtn.className = inactiveClass;
+            } else {
+                enBtn.className = activeClass;
+                arBtn.className = inactiveClass;
+            }
+
+            // Ganti teks berdasarkan attribute data-i18n
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    if (el.tagName.toLowerCase() === 'title') {
+                        document.title = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+
+            // Ganti teks untuk 'placeholder' input
+            const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+            placeholders.forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+
+            // Reset validation box UI apabila bahasa bertukar
+            validateForm();
+
+            updateHealthCertStatusText();
+            setTimeout(updateTabScrollButtons, 50); // Kemas kini butang skrol selepas tukar bahasa dan lebar diselaraskan
+        }
+
+        function updateHealthCertStatusText() {
+            const statusText = document.getElementById('health-cert-status-text');
+            if(isHealthCertOpen) {
+                statusText.textContent = translations[currentLanguage]['healthCertStatusHide'];
+            } else {
+                statusText.textContent = translations[currentLanguage]['healthCertStatusShow'];
+            }
+        }
+
+        // Fungsi Tukar Tab Utama (Diubah supaya hanya beri kesan di skrin kecil)
+        function switchMainTab(tabName) {
+            const btnPilgrim = document.getElementById('tab-main-pilgrim');
+            const btnServices = document.getElementById('tab-main-services');
+            const secPilgrim = document.getElementById('section-pilgrim');
+            const secServices = document.getElementById('section-services');
+
+            const activeClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-bold bg-[#071124] text-white border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
+            const inactiveClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-bold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
+
+            if (tabName === 'pilgrim') {
+                btnPilgrim.className = activeClass;
+                btnServices.className = inactiveClass;
+                // Guna max-lg:hidden untuk memastikan di desktop ia sentiasa terdedah (dipaparkan bersama-sama)
+                secPilgrim.classList.remove('max-lg:hidden');
+                secServices.classList.add('max-lg:hidden');
+            } else {
+                btnServices.className = activeClass;
+                btnPilgrim.className = inactiveClass;
+                secServices.classList.remove('max-lg:hidden');
+                secPilgrim.classList.add('max-lg:hidden');
+            }
+        }
+
+        // Fungsi Tukar Sub Tab
+        function switchSubTab(tabName) {
+
+            const tabs = [
+                {id: 'provider', btn: document.getElementById('tab-sub-provider')},
+                {id: 'housing', btn: document.getElementById('tab-sub-housing')}
+            ];
+
+            const contents = {
+                provider: document.getElementById('content-provider'),
+                housing: document.getElementById('content-housing')
+            };
+
+            // RESET
+            tabs.forEach(tab => {
+                tab.btn.setAttribute('aria-selected', 'false');
+                tab.btn.classList.remove('text-[#369A36]');
+                tab.btn.classList.add('text-gray-600');
+
+                const span = tab.btn.querySelector('.tab-indicator');
+                span.classList.remove('border-[#008000]');
+                span.classList.add('border-transparent');
+            });
+
+            // ACTIVE
+            const active = tabs.find(t => t.id === tabName);
+
+            active.btn.setAttribute('aria-selected', 'true');
+            active.btn.classList.remove('text-gray-600');
+            active.btn.classList.add('text-[#369A36]');
+
+            const activeSpan = active.btn.querySelector('.tab-indicator');
+            activeSpan.classList.remove('border-transparent');
+            activeSpan.classList.add('border-[#008000]');
+
+            // CONTENT
+            Object.keys(contents).forEach(key => {
+                contents[key].classList.add('hidden');
+            });
+
+            contents[tabName].classList.remove('hidden');
+
+            // 🚫 REMOVE FOCUS (INI YANG FIX SCROLL)
+            active.btn.blur();
+        }
+
+        // Fungsi Tukar Tab Lokasi Housing
+        function switchLocTab(locName) {
+            const locations = ['makkah', 'madinah', 'mina', 'arafat'];
+
+            locations.forEach(loc => {
+                const btn = document.getElementById(`tab-loc-${loc}`);
+                const content = document.getElementById(`loc-${loc}`);
+
+                if(content && btn){
+                    const underline = btn.querySelector("span");
+                    if(loc === locName){
+                        btn.className = "p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0";
+                        underline.className = "inline-block border-b-[2px] border-[#1a855b] pb-[8px] transition-colors";
+                        content.classList.remove('hidden');
+                    } else {
+                        btn.className = "p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0";
+                        underline.className = "inline-block border-b-[2px] border-transparent pb-[8px] transition-colors";
+                        content.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        // Fungsi Accordion Sijil Kesihatan
+        function toggleHealthCert() {
+            isHealthCertOpen = !isHealthCertOpen;
+            const content = document.getElementById('health-cert-content');
+            const icon = document.getElementById('health-cert-icon');
+            
+            if(isHealthCertOpen) {
+                content.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'chevron-up');
+            } else {
+                content.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'chevron-down');
+            }
+            updateHealthCertStatusText();
+            lucide.createIcons();
+        }
+
+        // Fungsi Dropdown Bahasa
+        function toggleDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            const chevron = document.getElementById('lang-chevron');
+            dropdown.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('#lang-container')) {
+                const dropdown = document.getElementById('lang-dropdown');
+                if (!dropdown.classList.contains('hidden')) {
+                    dropdown.classList.add('hidden');
+                    document.getElementById('lang-chevron').classList.remove('rotate-180');
+                }
+            }
+        }
+
+        // --- LOGIK SCROLL ARROW UNTUK TAB ---
+        function updateTabScrollButtons() {
+            const container = document.getElementById('tab-container');
+            const btnPrev = document.getElementById('tab-scroll-prev');
+            const btnNext = document.getElementById('tab-scroll-next');
+            
+            if (!container || !btnPrev || !btnNext) return;
+
+            const maxScroll = container.scrollWidth - container.clientWidth;
+
+            // Jika ruang mencukupi dan tidak perlu scroll, sembunyikan anak panah
+            if (maxScroll <= 5) {
+                btnPrev.classList.add('hidden');
+                btnNext.classList.add('hidden');
+                return;
+            }
+
+            let isStart, isEnd;
+            const scrollLeft = container.scrollLeft;
+            const absScrollLeft = Math.abs(scrollLeft);
+
+            if (document.documentElement.dir === 'rtl') {
+                // Konfigurasi scroll RTL Safari (Bermula maxScroll, berakhir 0)
+                if (scrollLeft > 0) {
+                    isStart = scrollLeft >= maxScroll - 5;
+                    isEnd = scrollLeft <= 5;
+                } else {
+                    // Konfigurasi scroll RTL Chrome/Firefox (Bermula 0, berakhir negatif)
+                    isStart = absScrollLeft <= 5;
+                    isEnd = absScrollLeft >= maxScroll - 5;
+                }
+            } else {
+                // Konfigurasi standard LTR
+                isStart = scrollLeft <= 5;
+                isEnd = scrollLeft >= maxScroll - 5;
+            }
+
+            if (isStart) {
+                btnPrev.classList.add('hidden');
+            } else {
+                btnPrev.classList.remove('hidden');
+            }
+
+            if (isEnd) {
+                btnNext.classList.add('hidden');
+            } else {
+                btnNext.classList.remove('hidden');
+            }
+        }
+
+        function scrollTabs(direction) {
+            const container = document.getElementById('tab-container');
+            if (!container) return;
+            // Kawal arah skrol mengikut bahasa LTR/RTL
+            const dirMultiplier = document.documentElement.dir === 'rtl' ? -1 : 1;
+            const amount = 150 * direction * dirMultiplier;
+            container.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+
+        // --- FUNGSI MODAL LAPORAN ---
+        function openReportModal(e) {
+            if (e) e.preventDefault();
+
+            const modal = document.getElementById('report-modal');
+            const mobileInput = document.getElementById('report-mobile');
+
+            modal.classList.remove('hidden');
+
+            // Set semula borang
+            document.getElementById('report-form').reset();
+            updateCharCount();
+            validateForm(); // Reset button UI + jadikan border hijau
+
+            // Terus letakkan cursor dalam kotak nombor telefon
+            setTimeout(() => {
+                mobileInput.focus();
+            }, 0);
+        }
+
+        function closeReportModal() {
+            const modal = document.getElementById('report-modal');
+            modal.classList.add('hidden');
+        }
+
+        function openSuccessModal() {
+            const successModal = document.getElementById('success-modal');
+            successModal.classList.remove('hidden');
+            lucide.createIcons(); // Pastikan ikon ditampal
+        }
+
+        function closeSuccessModal() {
+            const successModal = document.getElementById('success-modal');
+            successModal.classList.add('hidden');
+        }
+
+        function openWithdrawSuccessModal() {
+            const modal = document.getElementById('withdraw-success-modal');
+            modal.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeWithdrawSuccessModal() {
+            const modal = document.getElementById('withdraw-success-modal');
+            modal.classList.add('hidden');
+        }
+
+        function updateCharCount() {
+            const textarea = document.getElementById('report-notes');
+            const countSpan = document.getElementById('char-count');
+            const length = textarea.value.length;
+            countSpan.textContent = `${length} / 500`;
+        }
+        
+        // Fungsi Validasi Keseluruhan Borang Laporan
+        function validateForm() {
+            const mobileInput = document.getElementById('report-mobile');
+            const submitBtn = document.getElementById('submit-report-btn');
+            const errorMsg = document.getElementById('mobile-error');
+
+            const val = mobileInput.value.trim();
+            // Semak jika ia tepat 10 digit (hanya nombor 0-9)
+            const isMobileValid = /^\d{10}$/.test(val);
+
+            // Logik Kotak & Amaran
+            if (val.length > 0) {
+                if (isMobileValid) {
+                    // Sempurna (Hijau)
+                    mobileInput.classList.remove('border-gray-300', 'border-[#dc2626]', 'focus:border-[#dc2626]', 'focus:ring-[#fee2e2]', 'text-[#dc2626]');
+                    mobileInput.classList.add('border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
+                    errorMsg.classList.add('hidden');
+                } else {
+                    // Tak Sempurna / Huruf dimasukkan (Merah)
+                    mobileInput.classList.remove('border-gray-300', 'border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
+                    mobileInput.classList.add('border-[#dc2626]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
+                    errorMsg.classList.remove('hidden');
+                }
+            } else {
+                // Tiada Input (Kelabu asal)
+                mobileInput.classList.remove('border-[#dc2626]', 'focus:border-[#dc2626]', 'focus:ring-[#fee2e2]', 'text-[#dc2626]', 'border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-[#85CFAB]');
+                mobileInput.classList.add('border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
+                errorMsg.classList.add('hidden');
+            }
+
+            // Logik Butang Hantar (Hanya berdasarkan isMobileValid)
+            let btnClasses = "w-full h-[48px] sm:h-[56px] text-white text-[16px] sm:text-[17px] font-normal rounded-[12px] mt-[8px] transition-colors ";
+            if (isMobileValid) {
+                // Lulus Syarat Utama: Boleh Ditekan (Cursor Pointer)
+                submitBtn.className = btnClasses + "bg-[#1b8354] hover:bg-[#146c49] cursor-pointer shadow-md opacity-100 pointer-events-auto";
+            } else {
+                // Gagal Syarat: Dikunci sepenuhnya (pointer-events-none elak hover dan klik)
+                submitBtn.className = btnClasses + "bg-[#1b8354] cursor-not-allowed opacity-50 pointer-events-none";
+            }
+        }
+
+        function submitReportForm(e) {
+            e.preventDefault();
+            
+            const mobileInput = document.getElementById('report-mobile');
+            const val = mobileInput.value.trim();
+            const isMobileValid = /^\d{10}$/.test(val);
+
+            // Jika belum sempurna, batalkan niat pengguna untuk menghantar
+            if (!isMobileValid) {
+                validateForm(); // Pastikan ralat merah terpapar
+                return;
+            }
+            
+            // Menghantar data ke API
+            if (GAS_WEB_APP_URL && !GAS_WEB_APP_URL.includes("SILA_TAMPAL")) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const pilgrimId = urlParams.get('id') || 'Unknown';
+                const notesVal = document.getElementById('report-notes').value.trim();
+                
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'report',
+                        pilgrimId: pilgrimId,
+                        mobile: val,
+                        notes: notesVal
+                    })
+                }).catch(err => console.error(err));
+            }
+            
+            // 1. Selepas berjaya hantar, tutup modal borang dan buka modal berjaya
+            closeReportModal();
+            openSuccessModal();
+
+            // 2. Tukar butang "Submit" kepada "Withdraw" di Kad secara senyap
+            document.getElementById('btn-open-report').classList.add('hidden');
+            document.getElementById('btn-open-report').classList.remove('inline-flex');
+            document.getElementById('btn-withdraw-report').classList.remove('hidden');
+            document.getElementById('btn-withdraw-report').classList.add('inline-flex');
+        }
+
+        function withdrawReport(e) {
+            if(e) e.preventDefault();
+            
+            // Menghantar arahan BATALKAN ke API
+            if (GAS_WEB_APP_URL && !GAS_WEB_APP_URL.includes("SILA_TAMPAL")) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const pilgrimId = urlParams.get('id') || 'Unknown';
+                
+                fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'withdraw',
+                        pilgrimId: pilgrimId
+                    })
+                }).catch(err => console.error(err));
+            }
+
+            // 1. Buka Modal "Withdraw Berjaya"
+            openWithdrawSuccessModal();
+            
+            // 2. Tukar kembali butang "Withdraw" kepada "Submit" asal di Kad
+            document.getElementById('btn-withdraw-report').classList.add('hidden');
+            document.getElementById('btn-withdraw-report').classList.remove('inline-flex');
+            document.getElementById('btn-open-report').classList.remove('hidden');
+            document.getElementById('btn-open-report').classList.add('inline-flex');
+        }
+
+        // Jalankan pengesan apabila tetingkap diubahsuai
+        window.addEventListener('load', () => {
+            fetchPilgrimData(); // Ditambah untuk trigger fungsi DB semasa load
+            updateTabScrollButtons();
+            const tabContainer = document.getElementById('tab-container');
+            if (tabContainer) {
+                tabContainer.addEventListener('scroll', updateTabScrollButtons);
+            }
+        });
+        window.addEventListener('resize', updateTabScrollButtons);
+
+    </script>
+</body>
+</html>
