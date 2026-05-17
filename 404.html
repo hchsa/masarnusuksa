@@ -30,13 +30,19 @@
             display: none;
         }
 
-/* Kelas Latar Belakang Statik (Corak Garisan) */
-        .static-bg {
-            background-image: url('content-bg-rtl.8858e1cb6680e339.svg'), url('https://drive.google.com/thumbnail?id=1an5yX3hvxm3IRbrelqu7_2NiN-Uwajgq&sz=w2000');
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            background-size: 100% 100%; /* Memaksa gambar muat 100% lebar & tinggi tanpa terpotong */
-            background-position: center;
+/* Kelas Latar Belakang Khusus untuk Skrin Loading */
+        .loading-bg {
+            /* Gambar Default (Arab - Garisan di Kiri) */
+        background-image: url('https://drive.google.com/thumbnail?id=1rAThzDkQm5-RnHPGpRsCd2a9uqtavYgf&sz=w3000');
+        background-color: #FAFAFA;
+        background-size: contain;
+        background-position: top center;
+        background-repeat: no-repeat;
+
+        }
+        /* Apabila bahasa bertukar ke English (LTR), guna gambar garisan di Kanan */
+        html[dir="ltr"] .loading-bg {
+            background-image: url('https://drive.google.com/thumbnail?id=1an5yX3hvxm3IRbrelqu7_2NiN-Uwajgq&sz=w3000');
         }
 
         /* Gaya Khas untuk Nombor 404 */
@@ -59,13 +65,14 @@
     <!-- Container Utama -->
     <div id="app-container" class="w-full h-[100dvh] relative overflow-hidden transition-all duration-300 flex flex-col text-start rtl:text-right">
         
-        <!-- Latar Belakang Corak Beralun -->
-        <div class="absolute inset-[0px] z-0 pointer-events-none overflow-hidden">
-            <div class="absolute inset-[0px] static-bg rtl:scale-x-100 ltr:scale-x-[-1] opacity-60"></div>
-            <!-- Gradient putih dari bawah ke atas agar teks lebih jelas dibaca -->
-            <div class="absolute inset-[0px] bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent"></div>
-        </div>
+<!-- Latar Belakang Corak Beralun -->
+<div class="absolute inset-[0px] z-0 pointer-events-none overflow-hidden">
+    <div class="absolute inset-[0px] loading-bg opacity-100"></div>
 
+    <!-- Gradient putih lebih ringan supaya gambar tidak nampak kabur -->
+    <div class="absolute inset-[0px] bg-gradient-to-t from-[#FAFAFA]/70 via-[#FAFAFA]/20 to-transparent"></div>
+</div>
+   
         <!-- Ruang Kandungan Header & 404 -->
         <div class="flex-1 w-full flex flex-col relative z-10 pb-[60px]">
             
