@@ -96,13 +96,13 @@
                 <div class="relative text-right mt-[8px]" id="lang-container" dir="ltr">
                     <button id="lang-toggle-btn" onclick="toggleDropdown()" class="flex items-center justify-center gap-[6px] border-[0px] px-[8px] py-[4px] h-[32px] bg-transparent cursor-pointer">
                         <i data-lucide="globe" class="w-[20px] sm:w-[22px] h-[20px] sm:h-[22px] text-black pointer-events-none shrink-0"></i>
-                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-semibold text-gray-600 pointer-events-none">AR</span>
+                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-normal text-gray-600 pointer-events-none">AR</span>
                         <i id="lang-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-gray-800 transition-transform duration-300 pointer-events-none shrink-0"></i>
                     </button>
                     
                     <div id="lang-dropdown" class="hidden absolute right-[0px] top-full mt-[8px] w-[112px] bg-white rounded-[12px] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-[6px]">
-                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-semibold transition-colors" data-i18n="langAr">العربية</button>
-                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-semibold transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
+                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors" data-i18n="langAr">العربية</button>
+                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
                     </div>
                 </div>
             </header>
@@ -110,10 +110,10 @@
             <!-- Main Tabs (Sembunyi di Desktop - lg:hidden) -->
             <div class="px-[16px] sm:px-[24px] mb-[24px] mt-[16px] relative z-10 lg:hidden">
                 <div class="flex w-full bg-[#ebebeb] rounded-[18px] overflow-hidden h-[50px] sm:h-[55px]">
-                    <button id="tab-main-pilgrim" onclick="switchMainTab('pilgrim')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-[#fff] bg-[#101522] border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabPilgrim">
+                    <button id="tab-main-pilgrim" onclick="switchMainTab('pilgrim')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-semibold text-[#fff] bg-[#101522] border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabPilgrim">
                         بيانات الحاج
                     </button>
-                    <button id="tab-main-services" onclick="switchMainTab('services')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabServices">
+                    <button id="tab-main-services" onclick="switchMainTab('services')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-semibold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabServices">
                         الخدمات        
                     </button>
                 </div>
