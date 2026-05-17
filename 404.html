@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title data-i18n="pageTitle">الصفحة غير موجودة - مسار</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons (CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts: IBM Plex Sans Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:100;400;500;600;700&family=IBM+Plex+Sans+Arabic:100;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Tipografi & Latar Belakang */
+        body, button, input, textarea, select, h1, h2, h3, h4, h5, h6, p, span, div, a {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+        }
+
+        /* Menyembunyikan Scrollbar */
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+/* Kelas Latar Belakang Statik (Corak Garisan) */
+        .static-bg {
+            background-image: url('content-bg-rtl.8858e1cb6680e339.svg'), url('https://drive.google.com/thumbnail?id=1an5yX3hvxm3IRbrelqu7_2NiN-Uwajgq&sz=w2000');
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: 100% 100%; /* Memaksa gambar muat 100% lebar & tinggi tanpa terpotong */
+            background-position: center;
+        }
+
+        /* Gaya Khas untuk Nombor 404 */
+        .text-404 {
+            color: #F6EFE6; /* Warna isian (fill) */
+            -webkit-text-stroke: 4px #C0A47B; /* Warna garis luar (outline) */
+            text-shadow: 6px 6px 0px rgba(192, 164, 123, 0.15); /* Bayang halus */
+        }
+        @media (max-width: 640px) {
+            .text-404 {
+                -webkit-text-stroke: 3px #C0A47B;
+            }
+        }
+    </style>
+</head>
+
+<!-- Body memenuhkan 100% skrin di semua peranti -->
+<body class="min-h-screen w-full bg-[#FAFAFA] m-0 p-0 overflow-hidden text-gray-800 flex flex-col">
+
+    <!-- Container Utama -->
+    <div id="app-container" class="w-full h-[100dvh] relative overflow-hidden transition-all duration-300 flex flex-col text-start rtl:text-right">
+        
+        <!-- Latar Belakang Corak Beralun -->
+        <div class="absolute inset-[0px] z-0 pointer-events-none overflow-hidden">
+            <div class="absolute inset-[0px] static-bg rtl:scale-x-100 ltr:scale-x-[-1] opacity-60"></div>
+            <!-- Gradient putih dari bawah ke atas agar teks lebih jelas dibaca -->
+            <div class="absolute inset-[0px] bg-gradient-to-t from-[#FAFAFA] via-[#FAFAFA]/80 to-transparent"></div>
+        </div>
+
+        <!-- Ruang Kandungan Header & 404 -->
+        <div class="flex-1 w-full flex flex-col relative z-10 pb-[60px]">
+            
+            <!-- Header (Logo & Bahasa) -->
+            <header class="pt-[24px] px-[20px] sm:px-[32px] lg:px-[48px] 2xl:px-[64px] flex items-center justify-between w-full max-w-[1920px] mx-auto z-50">
+                <!-- Logo -->
+                <div class="bg-transparent">
+                    <img src="https://drive.google.com/thumbnail?id=1qPW0CD4g2l4FKDaRUfpimewQ7H9tez3A&sz=w2000" alt="تصريح" class="w-[120px] sm:w-[140px] lg:w-[160px] h-auto object-contain mix-blend-multiply" />
+                </div>
+                
+                <!-- Language Toggle -->
+                <div class="relative text-right mt-[4px]" id="lang-container" dir="ltr">
+                    <button id="lang-toggle-btn" onclick="toggleDropdown()" class="flex items-center justify-center gap-[6px] border-[0px] px-[8px] py-[4px] h-[32px] bg-transparent cursor-pointer">
+                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-normal text-gray-800 pointer-events-none mt-[2px]">EN</span>
+                        <i data-lucide="globe" class="w-[20px] sm:w-[22px] h-[20px] sm:h-[22px] text-gray-800 pointer-events-none shrink-0"></i>
+                        <i id="lang-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-gray-800 transition-transform duration-300 pointer-events-none shrink-0"></i>
+                    </button>
+                    
+                    <div id="lang-dropdown" class="hidden absolute right-[0px] top-full mt-[8px] w-[112px] bg-white rounded-[12px] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-[6px]">
+                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-600 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100" data-i18n="langAr">العربية</button>
+                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors" data-i18n="langEn">English</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Kandungan 404 Ralat -->
+            <main class="flex-1 flex flex-col items-center justify-center px-[24px] text-center w-full max-w-[800px] mx-auto z-10 mt-[-40px] sm:mt-[0px]">
+                
+                <!-- Teks 404 Besar Bergaris -->
+                <div class="mb-[32px] sm:mb-[40px] lg:mb-[48px]" dir="ltr">
+                    <h1 class="text-404 text-[130px] sm:text-[180px] lg:text-[220px] font-bold leading-none tracking-widest m-[0px] select-none">
+                        404
+                    </h1>
+                </div>
+
+                <!-- Mesej & Arahan -->
+                <div class="flex flex-col items-center gap-[12px] sm:gap-[16px]" dir="rtl">
+                    <h2 class="text-[20px] sm:text-[24px] lg:text-[28px] font-normal text-[#1a1a1a] m-[0px]" data-i18n="notFoundTitle">
+                        الصفحة غير موجودة
+                    </h2>
+                    <p class="text-[15px] sm:text-[17px] font-normal text-gray-500 m-[0px] max-w-[400px] sm:max-w-[500px] leading-relaxed" data-i18n="notFoundDesc">
+                        قد يكون الرابط الذي استخدمته معطلاً، او قد تمت إزالة الصفحة
+                    </p>
+                </div>
+
+                <!-- Pautan Kembali -->
+                <div class="mt-[40px] sm:mt-[48px]" dir="rtl">
+                    <a href="index.html" class="text-[16px] sm:text-[18px] font-normal text-[#1a1a1a] hover:text-[#198754] transition-colors duration-300 no-underline pb-[4px] border-b-[1px] border-transparent hover:border-[#198754]" data-i18n="backHome">
+                        العودة للرئيسية
+                    </a>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="absolute bottom-0 inset-x-0 w-full bg-white border-t border-gray-200 z-50">
+            <div class="w-full text-center text-[12px] sm:text-[14px] text-gray-500 py-[16px] px-[20px]" data-i18n="footerText">
+                تحت إشراف لجنة الحج العليا
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Dictionary Terjemahan untuk Halaman Not Found
+        const translations = {
+            'AR': {
+                'pageTitle': 'الصفحة غير موجودة - مسار',
+                'langAr': 'العربية',
+                'langEn': 'English',
+                'notFoundTitle': 'الصفحة غير موجودة',
+                'notFoundDesc': 'قد يكون الرابط الذي استخدمته معطلاً، او قد تمت إزالة الصفحة',
+                'backHome': 'العودة للرئيسية',
+                'footerText': 'تحت إشراف لجنة الحج العليا'
+            },
+            'EN': {
+                'pageTitle': 'Page Not Found - Masar',
+                'langAr': 'العربية',
+                'langEn': 'English',
+                // Teks 404 kekal dalam Bahasa Arab seperti dalam gambar rujukan
+                'notFoundTitle': 'الصفحة غير موجودة',
+                'notFoundDesc': 'قد يكون الرابط الذي استخدمته معطلاً، او قد تمت إزالة الصفحة',
+                'backHome': 'العودة للرئيسية',
+                // Hanya footer sahaja yang bertukar ke Bahasa Inggeris
+                'footerText': 'Under the supervision of the Supreme Hajj Committee'
+            }
+        };
+
+        // Init Icons
+        lucide.createIcons();
+        
+        // Tetapkan bahasa asal (English default mengikut screenshot EN anda, jika nak Arab tukar 'EN' ke 'AR')
+        let currentLanguage = 'EN';
+
+        // Set Language Logic
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('lang-dropdown').classList.add('hidden');
+            document.getElementById('current-lang').textContent = lang;
+
+            // Reset chevron rotation
+            document.getElementById('lang-chevron').classList.remove('rotate-180');
+
+            // Tukar arah dokumen & bahasa (RTL <-> LTR)
+            document.documentElement.lang = lang.toLowerCase();
+            document.documentElement.dir = lang === 'AR' ? 'rtl' : 'ltr';
+
+            // Logik Posisi Dropdown Ikon Bahasa
+            const toggleBtn = document.getElementById('lang-toggle-btn');
+            if (lang === 'AR') {
+                toggleBtn.classList.add('flex-row-reverse');
+            } else {
+                toggleBtn.classList.remove('flex-row-reverse');
+            }
+
+            // Tukar stail dropdown aktif
+            const arBtn = document.getElementById('lang-ar-btn');
+            const enBtn = document.getElementById('lang-en-btn');
+            
+            const activeClass = "block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors";
+            const inactiveClass = "block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100";
+
+            if (lang === 'AR') {
+                arBtn.className = activeClass;
+                enBtn.className = inactiveClass;
+            } else {
+                enBtn.className = activeClass;
+                arBtn.className = inactiveClass;
+            }
+
+            // Ganti teks berdasarkan attribute data-i18n
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    if (el.tagName.toLowerCase() === 'title') {
+                        document.title = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        // Fungsi Dropdown Bahasa
+        function toggleDropdown() {
+            const dropdown = document.getElementById('lang-dropdown');
+            const chevron = document.getElementById('lang-chevron');
+            dropdown.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        // Tutup dropdown jika klik di luar
+        window.onclick = function(event) {
+            if (!event.target.closest('#lang-container')) {
+                const dropdown = document.getElementById('lang-dropdown');
+                if (!dropdown.classList.contains('hidden')) {
+                    dropdown.classList.add('hidden');
+                    document.getElementById('lang-chevron').classList.remove('rotate-180');
+                }
+            }
+        }
+
+        // Initialize pada permulaan muat turun
+        window.onload = () => {
+            setLanguage(currentLanguage);
+        };
+    </script>
+</body>
+</html>
