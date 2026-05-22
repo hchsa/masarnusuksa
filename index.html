@@ -238,7 +238,7 @@
                         <div class="grid grid-cols-2 gap-y-[16px] sm:gap-y-[20px] gap-x-[12px] sm:gap-x-[24px] w-full text-[13px] sm:text-[14px]">
                             <div>
                                 <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblPilgrimNo">رقم الحاج</p>
-                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="lblPilgrimNo"></p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valPilgrimNo"></p>
                             </div>
                             <div>
                                 <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblGender">الجنس</p>
@@ -262,7 +262,7 @@
                             </div>
                             <div>
                                 <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblVisa">رقم التأشيرة</p>
-                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="lblVisa"></p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valVisa"></p>
                             </div>
                             <div>
                                 <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblCountry">بلد القدوم</p>
@@ -270,7 +270,7 @@
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblBorder">رقم الحدود</p>
-                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="lblBorder"></p>
+                                <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valBorder"></p>
                             </div>
                         </div>
                     </div>
@@ -745,6 +745,7 @@
                 'pilgrimName': '',
                 'pilgrimType': 'حاج عادي',
                 'lblPilgrimNo': 'رقم الحاج',
+                'valPilgrimNo': '',
                 'valGender': '',
                 'lblGender': 'الجنس',
                 'lblBirth': 'تاريخ الميلاد',
@@ -754,9 +755,11 @@
                 'lblPackage': 'نوع الباقة',
                 'valPackage': '',
                 'lblVisa': 'رقم التأشيرة',
+                'valVisa': '',
                 'lblCountry': 'بلد القدوم',
                 'valCountry': '',
                 'lblBorder': 'رقم الحدود',
+                'valBorder': '',
                 'subTabProvider': 'بيانات مقدم الخدمة',
                 'subTabHousing': 'بيانات السكن',
                 'hdrProvider': 'بيانات مقدم الخدمة',
@@ -830,6 +833,7 @@
                 'pilgrimName': '',
                 'pilgrimType': 'Normal Hajj',
                 'lblPilgrimNo': 'Pilgrim ID',
+                'valPilgrimNo': '',
                 'valGender': '',
                 'lblGender': 'Gender',
                 'lblBirth': 'Date of Birth',
@@ -839,9 +843,11 @@
                 'lblPackage': 'Package type',
                 'valPackage': '',
                 'lblVisa': 'Visa number',
+                'valVisa': '',
                 'lblCountry': 'Country of origin',
                 'valCountry': '',
                 'lblBorder': 'Border number',
+                'valBorder': '',
                 'subTabProvider': 'Service provider information',
                 'subTabHousing': 'Housing information',
                 'hdrProvider': 'Service provider information',
@@ -968,6 +974,9 @@
         // Memasukkan data DB ke dalam sistem bahasa (Translations)
         function updateTranslationsWithDB(data) {
             translations['AR']['pilgrimName'] = data.name || '-';
+            translations['AR']['valPilgrimNo'] = data.PilgrimNo || '-';
+            translations['AR']['valVisa'] = data.VisaNo || '-';
+            translations['AR']['valBorder'] = data.BorderNo || '-';
             translations['AR']['pilgrimType'] = data.typeAr || '-';
             translations['AR']['valGender'] = data.genderAr || '-';
             translations['AR']['valBirth'] = data.birthDate || '-';
@@ -978,6 +987,9 @@
             translations['AR']['valProviderCo'] = data.providerAr || '-';
             
             translations['EN']['pilgrimName'] = data.name || '-';
+            translations['EN']['valPilgrimNo'] = data.PilgrimNo || '-';
+            translations['EN']['valVisa'] = data.VisaNo || '-';
+            translations['EN']['valBorder'] = data.BorderNo || '-';
             translations['EN']['pilgrimType'] = data.typeEn || '-';
             translations['EN']['valGender'] = data.genderEn || '-';
             translations['EN']['valBirth'] = data.birthDate || '-';
