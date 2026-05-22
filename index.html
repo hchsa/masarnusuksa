@@ -974,9 +974,9 @@
         // Memasukkan data DB ke dalam sistem bahasa (Translations)
         function updateTranslationsWithDB(data) {
             translations['AR']['pilgrimName'] = data.name || '-';
-            translations['AR']['valPilgrimNo'] = data.PilgrimNo || '-';
-            translations['AR']['valVisa'] = data.VisaNo || '-';
-            translations['AR']['valBorder'] = data.BorderNo || '-';
+            translations['AR']['valPilgrimNo'] = data.pilgrimNo || '-';
+            translations['AR']['valVisa'] = data.visaNo || '-';
+            translations['AR']['valBorder'] = data.borderNo || '-';
             translations['AR']['pilgrimType'] = data.typeAr || '-';
             translations['AR']['valGender'] = data.genderAr || '-';
             translations['AR']['valBirth'] = data.birthDate || '-';
@@ -987,9 +987,9 @@
             translations['AR']['valProviderCo'] = data.providerAr || '-';
             
             translations['EN']['pilgrimName'] = data.name || '-';
-            translations['EN']['valPilgrimNo'] = data.PilgrimNo || '-';
-            translations['EN']['valVisa'] = data.VisaNo || '-';
-            translations['EN']['valBorder'] = data.BorderNo || '-';
+            translations['EN']['valPilgrimNo'] = data.pilgrimNo || '-';
+            translations['EN']['valVisa'] = data.visaNo || '-';
+            translations['EN']['valBorder'] = data.borderNo || '-';
             translations['EN']['pilgrimType'] = data.typeEn || '-';
             translations['EN']['valGender'] = data.genderEn || '-';
             translations['EN']['valBirth'] = data.birthDate || '-';
