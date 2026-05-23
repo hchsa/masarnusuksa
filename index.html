@@ -67,6 +67,36 @@
             scrollbar-width: none;
         }
 
+        .survey-arrow {
+            margin-left: 8px;
+        }
+        
+        /* Auto RTL Support for Survey Card */
+        html[dir="rtl"] .survey-btn {
+            text-align: right;
+        }
+        html[dir="rtl"] .survey-arrow {
+            margin-left: 0;
+            margin-right: 8px;
+        }
+
+        /* Custom Scrollbar untuk Dropdown Bahasa */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 8px;
+            margin: 4px 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
     </style>
 </head>
 
@@ -108,7 +138,7 @@
             </header>
 
             <!-- ================= SECTION: PILGRIM SURVEY ================= -->
-<div class="w-full max-w-[1920px] mx-auto px-[14px] sm:px-[20px] lg:px-[42px] 2xl:px-[56px] pt-[12px] lg:pt-[16px]">
+<div class="w-full max-w-[1920px] mx-auto pb-[24px] px-[14px] sm:px-[20px] lg:px-[42px] 2xl:px-[56px] pt-[12px] lg:pt-[16px]">
 
   <div
     class="
@@ -524,6 +554,20 @@
                         </div>
                     </div>
 
+                    <!-- Hajj Guide Card (New Section) -->
+                    <div class="bg-[#ECF8F5] backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-sm border border-[#A7DDD0] relative overflow-hidden flex flex-col justify-center min-h-[120px] transition-all duration-300">
+                        <div class="relative z-1 w-full text-start">
+                            <div class="flex items-center gap-[10px] mb-[8px]">
+                                <i data-lucide="file-text" class="w-[20px] h-[20px] text-[#256e5c]"></i>
+                                <h3 class="text-[20px] sm:text-[26px] font-normal text-[#256e5c] m-[0px]" data-i18n="guideCardTitle">دليلك الإرشادي للحج</h3>
+                            </div>
+                            <div class="flex items-center gap-[8px] cursor-pointer" onclick="openGuideModal(event)">
+                                <span class="text-[14px] sm:text-[15px] underline decoration-1 underline-offset-4 text-[#256e5c]" data-i18n="guideCardDesc">استعرض أو حمّل دليل الحج</span>
+                                <i data-lucide="arrow-left" class="w-[16px] h-[16px] text-[#256e5c] rtl:rotate-0 ltr:rotate-180 shrink-0"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Report Lost Pilgrim Card -->
                     <div class="bg-white/95 backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-lg border border-gray-100 relative overflow-hidden flex flex-col justify-center min-h-[170px]">
                         <div class="relative z-1 w-full">
@@ -547,16 +591,16 @@
 
                     <!-- Health Certificate Accordion -->
                     <div class="mb-[24px]">
-                        <button onclick="toggleHealthCert()" class="w-full flex flex-col bg-[#ECF8F5] backdrop-blur border border-[#afe0d4] rounded-[12px] p-[12px] shadow-lg cursor-pointer transition-all duration-300">
+                        <div class="w-full flex flex-col bg-[#ECF8F5] backdrop-blur border border-[#afe0d4] rounded-[12px] p-[12px] transition-all duration-300">
                             <div class="flex gap-[10px] text-start mx-[20px]">
                                 <i data-lucide="stethoscope" class="w-[20px] h-[20px] text-[#256e5c]"></i>
-                                <span class="text-[15px] sm:text-[17px] font-normal text-[#256e5c]" data-i18n="healthCertBtnTitle">استعراض شهادة الاستطاعة الصحية الآن</span>
+                                <h3 class="text-[15px] sm:text-[17px] font-normal text-[#256e5c]" data-i18n="healthCertBtnTitle">استعراض شهادة الاستطاعة الصحية الآن</h3>
                             </div>
-                            <div class="flex gap-[8px] mt-[6px] text-[#256e5c] w-full mx-[50px]">
+                            <div class="flex gap-[8px] mt-[6px] text-[#256e5c] w-full mx-[50px] cursor-pointer" onclick="toggleHealthCert()">
                                 <span id="health-cert-status-text" class="text-[15px] sm:text-[17px] font-normal" data-i18n="healthCertStatusShow">عرض الشهادة الصحية</span>
                                 <i id="health-cert-icon" data-lucide="chevron-down" class="w-[20px] h-[20px]"></i>
                             </div>
-                        </button>
+                        </div>
 
                         <div id="health-cert-content" class="hidden mt-[24px] p-[16px] sm:p-[20px] bg-gradient-to-b from-[#FFFDF9] to-white backdrop-blur rounded-[16px] shadow-lg relative overflow-hidden">
                             <div class="relative z-10 w-full">
@@ -725,6 +769,66 @@
                     <i data-lucide="check" stroke-width="2.5" class="w-[24px] h-[24px] sm:w-[32px] sm:h-[32px] text-[#198754]"></i>
                 </div>
                 <h3 class="text-[20px] sm:text-[22px] font-normal text-gray-800 m-[0px] mb-[12px] sm:mb-[16px]" data-i18n="withdrawSuccessTitle">تم سحب البلاغ بنجاح</h3>
+            </div>
+        </div>
+
+        <!-- MODAL: HAJJ GUIDE -->
+        <div id="guide-modal" class="hidden absolute inset-0 z-[100] flex items-center justify-center bg-gray-600/30 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
+            <div class="bg-white w-full sm:max-w-[420px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col ltr:text-left rtl:text-right text-start border border-gray-100">
+                
+                <!-- Butang Close X -->
+                <button type="button" onclick="closeGuideModal()" class="absolute top-[20px] sm:top-[24px] rtl:left-[20px] sm:rtl:left-[24px] ltr:right-[20px] sm:ltr:right-[24px] font-normal text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0 z-10">
+                    <i data-lucide="x" stroke-width="1.75" class="font-normal w-[22px] sm:w-[24px] h-[22px] sm:h-[24px]"></i>
+                </button>
+
+                <h3 class="text-[20px] sm:text-[22px] font-normal text-gray-800 m-[0px] mb-[16px] sm:mb-[20px]" data-i18n="guideModalTitle">دليلك الإرشادي للحج</h3>
+                <hr class="border-t border-gray-100 mb-[20px] -mx-[24px] sm:-mx-[32px]">
+
+                <p class="font-normal text-[15px] sm:text-[16px] text-gray-600 leading-snug mb-[16px]" data-i18n="guideModalSubtitle">يرجى اختيار لغة الدليل الإرشادي</p>
+                
+                <div class="flex flex-col gap-[8px] mb-[32px]">
+                    <label class="text-[14px] sm:text-[15px] font-normal text-gray-500" data-i18n="guideModalLabel">
+                        لغة الدليل الإرشادي
+                    </label>
+                    
+                    <!-- CUSTOM DROPDOWN -->
+                    <div id="guide-select-wrapper" class="relative w-full">
+                        <button type="button" id="guide-custom-select-btn" onclick="toggleCustomGuideSelect()" class="w-full h-[48px] sm:h-[52px] border border-[#85CFAB] rounded-[16px] py-[10px] px-[16px] flex justify-between items-center bg-white transition-all focus:outline-none cursor-pointer">
+                            <span id="guide-selected-text" class="text-[15px] text-gray-400 font-normal" data-i18n="guideModalPlaceholder">اختر لغة الدليل الإرشادي</span>
+                            <i id="guide-select-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-[#256e5c] transition-transform duration-300"></i>
+                        </button>
+                        
+                        <div id="guide-custom-dropdown" class="hidden absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                            <ul class="max-h-[210px] overflow-y-auto custom-scrollbar p-[8px] flex flex-col gap-[2px] m-0 rtl:text-right text-start">
+                                <li onclick="selectGuideLang('ar', 'العربية', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">العربية</li>
+                                <li onclick="selectGuideLang('en', 'English', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">English</li>
+                                <li onclick="selectGuideLang('fr', 'French', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Français</li>
+                                <li onclick="selectGuideLang('bn', 'Bengali', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">বাংলা</li>
+                                <li onclick="selectGuideLang('hi', 'Indian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">हिन्दी</li>
+                                <li onclick="selectGuideLang('id', 'Indonesian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Bahasa Indonesia</li>
+                                <li onclick="selectGuideLang('ms', 'Malaysian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Bahasa Melayu</li>
+                                <li onclick="selectGuideLang('uz', 'Özbek', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Oʻzbekcha</li>
+                                <li onclick="selectGuideLang('prs', 'Persian (Afghanistan', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">دری</li>
+                                <li onclick="selectGuideLang('fa', 'Persian (Iran)', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">فارسی</li>
+                                <li onclick="selectGuideLang('ru', 'Russian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Русский</li>
+                                <li onclick="selectGuideLang('tr', 'Turkish', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Türkçe</li>
+                                <li onclick="selectGuideLang('ur', 'Urdu', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">اردو</li>
+                            </ul>                       
+                         </div>
+                    </div>
+
+                <!-- Butang Preview & Download -->
+                <div class="flex gap-[12px] w-full mt-auto">
+                    <!-- Button Download -->
+                    <button type="button" id="btn-guide-download" onclick="downloadGuide()" class="flex-[1.2] h-[48px] sm:h-[52px] bg-white border border-[#85CFAB] text-[#85CFAB] text-[15px] sm:text-[16px] font-normal rounded-[12px] transition-all opacity-50 pointer-events-none flex items-center justify-center gap-[8px]">
+                        <span data-i18n="btnDownload">تحميل الدليل</span>
+                        <i data-lucide="download" class="w-[18px] h-[18px] mt-[-2px]"></i>
+                    </button>
+                    <!-- Button Preview -->
+                    <button type="button" id="btn-guide-preview" onclick="previewGuide()" class="flex-1 h-[48px] sm:h-[52px] bg-[#85CFAB] text-white text-[15px] sm:text-[16px] font-normal rounded-[12px] transition-all opacity-50 pointer-events-none flex items-center justify-center gap-[8px]">
+                        <span data-i18n="btnPreview">استعراض</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1196,11 +1300,23 @@
         }
 
         window.onclick = function(event) {
+            // Tutup dropdown bahasa utama
             if (!event.target.closest('#lang-container')) {
                 const dropdown = document.getElementById('lang-dropdown');
                 if (!dropdown.classList.contains('hidden')) {
                     dropdown.classList.add('hidden');
                     document.getElementById('lang-chevron').classList.remove('rotate-180');
+                }
+            }
+            // Tutup dropdown Modal Hajj Guide
+            if (!event.target.closest('#guide-select-wrapper')) {
+                const guideDropdown = document.getElementById('guide-custom-dropdown');
+                const guideChevron = document.getElementById('guide-select-chevron');
+                const guideBtn = document.getElementById('guide-custom-select-btn');
+                if (guideDropdown && !guideDropdown.classList.contains('hidden')) {
+                    guideDropdown.classList.add('hidden');
+                    if (guideChevron) guideChevron.classList.remove('rotate-180');
+                    if (guideBtn) guideBtn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
                 }
             }
         }
@@ -1215,7 +1331,6 @@
 
             const maxScroll = container.scrollWidth - container.clientWidth;
 
-            // Jika ruang mencukupi dan tidak perlu scroll, sembunyikan anak panah
             if (maxScroll <= 5) {
                 btnPrev.classList.add('hidden');
                 btnNext.classList.add('hidden');
@@ -1227,17 +1342,14 @@
             const absScrollLeft = Math.abs(scrollLeft);
 
             if (document.documentElement.dir === 'rtl') {
-                // Konfigurasi scroll RTL Safari (Bermula maxScroll, berakhir 0)
                 if (scrollLeft > 0) {
                     isStart = scrollLeft >= maxScroll - 5;
                     isEnd = scrollLeft <= 5;
                 } else {
-                    // Konfigurasi scroll RTL Chrome/Firefox (Bermula 0, berakhir negatif)
                     isStart = absScrollLeft <= 5;
                     isEnd = absScrollLeft >= maxScroll - 5;
                 }
             } else {
-                // Konfigurasi standard LTR
                 isStart = scrollLeft <= 5;
                 isEnd = scrollLeft >= maxScroll - 5;
             }
@@ -1258,7 +1370,6 @@
         function scrollTabs(direction) {
             const container = document.getElementById('tab-container');
             if (!container) return;
-            // Kawal arah skrol mengikut bahasa LTR/RTL
             const dirMultiplier = document.documentElement.dir === 'rtl' ? -1 : 1;
             const amount = 150 * direction * dirMultiplier;
             container.scrollBy({ left: amount, behavior: 'smooth' });
@@ -1429,6 +1540,144 @@
             document.getElementById('btn-withdraw-report').classList.remove('inline-flex');
             document.getElementById('btn-open-report').classList.remove('hidden');
             document.getElementById('btn-open-report').classList.add('inline-flex');
+        }
+
+        // --- FUNGSI HAJJ GUIDE (CUSTOM DROPDOWN) ---
+        const guideLinks = {
+            'ar': { preview: 'https://media.nusuk.sa/cms/uploads/dlyl_alhj_almkhtsr_dyjytal_364cfccf85.pdf', download: 'https://media.nusuk.sa/cms/uploads/dlyl_alhj_almkhtsr_dyjytal_364cfccf85.pdf' },
+            'en': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_English_Digital_df2f2be215.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_English_Digital_df2f2be215.pdf' },
+            'fr': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_French_Digital_83720242e3.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_French_Digital_83720242e3.pdf' },
+            'bn': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Bengali_Digital_856e70c7a8.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Bengali_Digital_856e70c7a8.pdf' },
+            'hi': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indian_Digital_6d42b3e318.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indian_Digital_6d42b3e318.pdf' },
+            'id': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indo_Digital_8bae439bbd.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indo_Digital_8bae439bbd.pdf' },
+            'ms': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Malysian_Digital_87e2039f31.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Malysian_Digital_87e2039f31.pdf' },
+            'uz': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Oezbeki_Digital_ee74cfb7d3.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Oezbeki_Digital_ee74cfb7d3.pdf' },
+            'prs': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Afgani_Digital_4463d77037.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Afgani_Digital_4463d77037.pdf' },
+            'fa': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Irani_Digital_531daae37b.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Irani_Digital_531daae37b.pdf' },
+            'ru': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Russian_Digital_95d3cb3015.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Russian_Digital_95d3cb3015.pdf' },
+            'tr': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Turkish_Digital_e4afa266b7.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Turkish_Digital_e4afa266b7.pdf' },
+            'ur': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Urdu_Pakistani_Digital_89c278e816.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Urdu_Pakistani_Digital_89c278e816.pdf' }
+        };
+
+        let selectedGuideLang = "";
+
+        function openGuideModal(e) {
+            if (e) e.preventDefault();
+            const modal = document.getElementById('guide-modal');
+            const textSpan = document.getElementById('guide-selected-text');
+            const btnPreview = document.getElementById('btn-guide-preview');
+            const btnDownload = document.getElementById('btn-guide-download');
+            
+            // 1. Reset dropdown text
+            selectedGuideLang = "";
+            if(textSpan && translations[currentLanguage]) {
+                textSpan.textContent = translations[currentLanguage]['guideModalPlaceholder'];
+                textSpan.classList.add('text-gray-400');
+                textSpan.classList.remove('text-gray-900');
+            }
+            
+            // 2. Buang highlight aktif dari semua pilihan
+            document.querySelectorAll('.guide-lang-item').forEach(el => {
+                el.classList.remove('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
+                el.classList.add('border-transparent');
+            });
+            
+            // 3. Matikan / Kelabukan Butang
+            if(btnPreview && btnDownload) {
+                btnPreview.classList.add('opacity-50', 'pointer-events-none');
+                btnDownload.classList.add('opacity-50', 'pointer-events-none');
+                btnPreview.classList.remove('cursor-pointer', 'bg-[#198754]', 'hover:bg-[#146c49]');
+                btnPreview.classList.add('bg-[#85CFAB]');
+                btnDownload.classList.remove('cursor-pointer', 'border-[#198754]', 'text-[#198754]', 'hover:bg-[#E7F5EE]');
+                btnDownload.classList.add('border-[#85CFAB]', 'text-[#85CFAB]');
+            }
+            
+            // 4. Pastikan menu tertutup semasa dibuka
+            const guideDropdown = document.getElementById('guide-custom-dropdown');
+            const guideChevron = document.getElementById('guide-select-chevron');
+            const guideBtn = document.getElementById('guide-custom-select-btn');
+            
+            if(guideDropdown) guideDropdown.classList.add('hidden');
+            if(guideChevron) guideChevron.classList.remove('rotate-180');
+            if(guideBtn) guideBtn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
+
+            // 5. Akhir sekali, tayangkan Modal
+            modal.classList.remove('hidden');
+        }
+
+        function closeGuideModal() {
+            document.getElementById('guide-modal').classList.add('hidden');
+        }
+
+        function toggleCustomGuideSelect() {
+            const dropdown = document.getElementById('guide-custom-dropdown');
+            const chevron = document.getElementById('guide-select-chevron');
+            const btn = document.getElementById('guide-custom-select-btn');
+
+            if(dropdown) dropdown.classList.toggle('hidden');
+            if(chevron) chevron.classList.toggle('rotate-180');
+            
+            if(dropdown && !dropdown.classList.contains('hidden')) {
+                if(btn) btn.classList.add('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
+            } else {
+                if(btn) btn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
+            }
+        }
+
+        function selectGuideLang(langCode, langName, element) {
+            selectedGuideLang = langCode;
+            
+            // Kemaskini teks pada butang pemilih
+            const textSpan = document.getElementById('guide-selected-text');
+            if(textSpan) {
+                textSpan.textContent = langName;
+                textSpan.classList.remove('text-gray-400');
+                textSpan.classList.add('text-gray-900');
+            }
+
+            // Set styling pada kotak bahasa yang dipilih (Border hijau tua, background hijau cair)
+            document.querySelectorAll('.guide-lang-item').forEach(el => {
+                el.classList.remove('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
+                el.classList.add('border-transparent');
+            });
+            element.classList.remove('border-transparent');
+            element.classList.add('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
+
+            // Tutup senarai selepas dipilih
+            toggleCustomGuideSelect();
+
+            // Hidupkan / Aktifkan Butang Preview & Download
+            const btnPreview = document.getElementById('btn-guide-preview');
+            const btnDownload = document.getElementById('btn-guide-download');
+            
+            if(btnPreview && btnDownload) {
+                btnPreview.classList.remove('opacity-50', 'pointer-events-none', 'bg-[#85CFAB]');
+                btnPreview.classList.add('cursor-pointer', 'bg-[#198754]', 'hover:bg-[#146c49]');
+                
+                btnDownload.classList.remove('opacity-50', 'pointer-events-none', 'border-[#85CFAB]', 'text-[#85CFAB]');
+                btnDownload.classList.add('cursor-pointer', 'border-[#198754]', 'text-[#198754]', 'hover:bg-[#E7F5EE]');
+            }
+        }
+
+        function previewGuide() {
+            if (selectedGuideLang && guideLinks[selectedGuideLang] && guideLinks[selectedGuideLang].preview) {
+                window.open(guideLinks[selectedGuideLang].preview, '_blank');
+            } else {
+                alert("The preview link for this language has not been set yet.");
+            }
+        }
+
+        function downloadGuide() {
+            if (selectedGuideLang && guideLinks[selectedGuideLang] && guideLinks[selectedGuideLang].download) {
+                const link = document.createElement('a');
+                link.href = guideLinks[selectedGuideLang].download;
+                link.setAttribute('download', '');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                alert("The download link for this language has not been set yet.");
+            }
         }
 
         // Jalankan pengesan apabila tetingkap diubahsuai
