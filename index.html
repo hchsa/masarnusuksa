@@ -313,16 +313,17 @@
                             <i data-lucide="chevron-left" class="w-[20px] h-[20px] rtl:hidden ltr:block mt-[14px]"></i>
                         </button>
 
-                        <div id="tab-container" class="flex gap-[24px] sm:gap-[32px] w-full overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth px-[4px]">
+                        <!-- TAB CONTAINER1 -->
+                        <div id="tab-container" class="flex gap-[32px] sm:gap-[32px] w-full overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth pr-[16px] sm:rtl:pr-[32px] ltr:pl-[64px] items-center">
 
-                            <button type="button" role="tab" id="tab-sub-provider" onclick="switchSubTab('provider')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-[#369A36] shrink-0 outline-none">
-                                <span class="inline-block tab-indicator border-b-[2px] border-[#008000] pb-[4px] transition-colors" data-i18n="subTabProvider">
+                            <button type="button" role="tab" id="tab-sub-provider" onclick="switchSubTab('provider')" class="tab-btn min-w-fit text-[18px] sm:text-[20px] font-normal text-[#369A36] shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-[#008000] pb-[8px] transition-colors" data-i18n="subTabProvider">
                                 بيانات مقدم الخدمة
                                 </span>
                             </button>
 
-                            <button type="button" role="tab" id="tab-sub-housing" onclick="switchSubTab('housing')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-gray-600 shrink-0 outline-none">
-                                <span class="inline-block tab-indicator border-b-[2px] border-transparent pb-[4px] transition-colors" data-i18n="subTabHousing">
+                            <button type="button" role="tab" id="tab-sub-housing" onclick="switchSubTab('housing')" class="tab-btn min-w-fit text-[18px] sm:text-[20px] font-normal text-gray-700 shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="subTabHousing">
                                 بيانات السكن
                                 </span>
                             </button>
@@ -382,17 +383,17 @@
                             <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
                             <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                     
-                            <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative item-center ltr:pl-[0px] sm:ltr:pl-[32px]">
-                                <button id="tab-loc-makkah" onclick="switchLocTab('makkah')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0">
+                            <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative item-center justify-start ltr:pl-[32px]">
+                                <button id="tab-loc-makkah" onclick="switchLocTab('makkah')" class="p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0">
                                     <span class="inline-block border-b-[2px] border-[#1a855b] pb-[8px] transition-colors" data-i18n="locMakkah">مكة المكرمة</span>
                                 </button>
-                                <button id="tab-loc-madinah" onclick="switchLocTab('madinah')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                <button id="tab-loc-madinah" onclick="switchLocTab('madinah')" class="p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
                                     <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locMadinah">المدينة المنورة</span>
                                 </button>
-                                <button id="tab-loc-mina" onclick="switchLocTab('mina')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                <button id="tab-loc-mina" onclick="switchLocTab('mina')" class="p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
                                     <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locMina">منى</span>
                                 </button>
-                                <button id="tab-loc-arafat" onclick="switchLocTab('arafat')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
+                                <button id="tab-loc-arafat" onclick="switchLocTab('arafat')" class="p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0">
                                     <span class="inline-block border-b-[2px] border-transparent pb-[8px] transition-colors" data-i18n="locArafat">عرفات</span>
                                 </button>
                             </div>
@@ -511,7 +512,7 @@
                             <!-- ITEM 1 -->
                             <div class="flex flex-col gap-[0px]">
                                 <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="hajjMinistryPhone">التواصل مع وزارة الحج و العمره</p>
-                                <a href="tel:1966" class="flex items-center gap-[0px] no-underline">
+                                <a href="tel:1966" class="flex items-center gap-[10px] no-underline">
                                     <img src="https://drive.google.com/thumbnail?id=1cDPX9MNCP05RdKYOCv8VpujzUTOA7pSw&sz=w2000"
                                          class="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rtl:rotate-0 ltr:rotate-90"/>
                                     <span class="text-[#198754] font-normal text-[15px] sm:text-[16px]">1966</span>
@@ -521,7 +522,7 @@
                             <!-- ITEM 2 -->
                             <div class="flex flex-col gap-[0px]">
                                 <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="providerPhone">التواصل مع شركة تقديم الخدمة</p>
-                                <a href="tel:+9668001111415" class="flex items-center gap-[0px] no-underline">
+                                <a href="tel:+9668001111415" class="flex items-center gap-[10px] no-underline">
                                     <img src="https://drive.google.com/thumbnail?id=1cDPX9MNCP05RdKYOCv8VpujzUTOA7pSw&sz=w2000"
                                          class="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rtl:rotate-0 ltr:rotate-90" />
                                     <span class="text-[#198754] font-normal text-[15px] sm:text-[16px]" dir="ltr">+966 8001111415</span>
@@ -1447,11 +1448,11 @@ dir="auto"
                 if(content && btn){
                     const underline = btn.querySelector("span");
                     if(loc === locName){
-                        btn.className = "p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0";
+                        btn.className = "p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0";
                         underline.className = "inline-block border-b-[2px] border-[#1a855b] pb-[8px] transition-colors";
                         content.classList.remove('hidden');
                     } else {
-                        btn.className = "p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0";
+                        btn.className = "p-0 text-[18px] sm:text-[20px] font-normal whitespace-nowrap text-gray-700 bg-transparent cursor-pointer shrink-0";
                         underline.className = "inline-block border-b-[2px] border-transparent pb-[8px] transition-colors";
                         content.classList.add('hidden');
                     }
