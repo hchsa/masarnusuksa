@@ -341,14 +341,14 @@
                             <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
                             <hr class="border-t border-gray-200 mb-[20px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                             
-                            <div class="grid grid-cols-2 gap-y-[16px] gap-x-[12px] sm:gap-x-[20px] w-full mb-[24px]">
+                            <div class="grid grid-cols-2 gap-y-[16px] gap-x-[12px] sm:gap-x-[20px] w-full">
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblProviderCo">شركة تقديم الخدمة</p>
+                                    <p class="text-gray-600 text-[13px] font-normal m-[0px] mb-[4px]" data-i18n="lblProviderCo">شركة تقديم الخدمة</p>
                                     <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valProviderCo">شركة فندق هوليدي إن بكة شخص واحد</p>
                                 </div>
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblHospMakkah">مركز الضيافة في مكة</p>
-                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valHospMakkah">مركز ضيافة نزلي (67)</p>
+                                    <p class="text-gray-600 text-[13px] font-normal m-[0px] mb-[4px]" data-i18n="lblHospMakkah">مركز الضيافة في مكة</p>
+                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px] mb-[4px]" data-i18n="valHospMakkah">مركز ضيافة نزلي (67)</p>
                                 </div>
                                 <div class="flex flex-col gap-[0px]">
                                     <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblHospMadinah">مركز الضيافة في المدينة</p>
@@ -742,7 +742,7 @@
                         <div class="text-[12px] sm:text-[13px] text-gray-400 mt-[1px] text-left" dir="ltr" id="char-count">0 / 500</div>
                     </div>
 
-                    <button type="submit" id="submit-report-btn" class="w-full h-[48px] sm:h-[56px] bg-[#1b8354] text-[#fff] text-[16px] sm:text-[17px] font-medium rounded-[12px] mt-[8px] transition-colors pointer-events-none opacity-50" data-i18n="btnSend">إرسال</button>
+                    <button type="submit" id="submit-report-btn" disabled class="w-full h-[48px] sm:h-[56px] bg-[#1b8354] text-[#fff] text-[16px] sm:text-[17px] font-medium rounded-[12px] mt-[8px] transition-colors cursor-not-allowed opacity-50" data-i18n="btnSend">إرسال</button>
                 </form>
             </div>
         </div>
@@ -890,13 +890,13 @@
         h-auto 
         px-[28px] 
         py-[8px] 
-        bg-[#85CFAB] 
+        bg-[#1b8354] 
         text-white 
         text-[16px] 
         font-normal 
         rounded-[12px] 
         transition-all duration-300 
-        opacity-50 
+        opacity-100 
         pointer-events-none 
         inline-flex items-center justify-center 
         gap-[8px] 
@@ -1614,46 +1614,96 @@ dir="auto"
             countSpan.textContent = `${length} / 500`;
         }
         
-        // Fungsi Validasi Keseluruhan Borang Laporan
-        function validateForm() {
-            const mobileInput = document.getElementById('report-mobile');
-            const submitBtn = document.getElementById('submit-report-btn');
-            const errorMsg = document.getElementById('mobile-error');
+        // Fungsi Validasi Keseluruhan Borang Laporan 
+function validateForm() {
+    const mobileInput = document.getElementById('report-mobile');
+    const submitBtn = document.getElementById('submit-report-btn');
+    const errorMsg = document.getElementById('mobile-error');
 
-            const val = mobileInput.value.trim();
-            // Semak jika ia tepat 10 digit (hanya nombor 0-9)
-            const isMobileValid = /^\d{10}$/.test(val);
+    const val = mobileInput.value.trim();
 
-            // Logik Kotak & Amaran
-            if (val.length > 0) {
-                if (isMobileValid) {
-                    // Sempurna (Hijau)
-                    mobileInput.classList.remove('border-gray-300', 'border-[#dc2626]', 'focus:border-[#dc2626]', 'focus:ring-[#fee2e2]', 'text-[#dc2626]');
-                    mobileInput.classList.add('border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
-                    errorMsg.classList.add('hidden');
-                } else {
-                    // Tak Sempurna / Huruf dimasukkan (Merah)
-                    mobileInput.classList.remove('border-gray-300', 'border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
-                    mobileInput.classList.add('border-[#dc2626]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
-                    errorMsg.classList.remove('hidden');
-                }
-            } else {
-                // Tiada Input (Kelabu asal)
-                mobileInput.classList.remove('border-[#dc2626]', 'focus:border-[#dc2626]', 'focus:ring-[#fee2e2]', 'text-[#dc2626]', 'border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-[#85CFAB]');
-                mobileInput.classList.add('border-[#85CFAB]', 'focus:border-[#85CFAB]', 'focus:ring-[#E7F5EE]', 'text-gray-800');
-                errorMsg.classList.add('hidden');
-            }
+    // Semak jika ia tepat 10 digit sahaja
+    const isMobileValid = /^\d{10}$/.test(val);
 
-            // Logik Butang Hantar (Hanya berdasarkan isMobileValid)
-            let btnClasses = "w-full h-[48px] sm:h-[56px] text-white text-[16px] sm:text-[17px] font-normal rounded-[12px] mt-[8px] transition-colors ";
-            if (isMobileValid) {
-                // Lulus Syarat Utama: Boleh Ditekan (Cursor Pointer)
-                submitBtn.className = btnClasses + "bg-[#1b8354] hover:bg-[#146c49] cursor-pointer shadow-md opacity-100 pointer-events-auto";
-            } else {
-                // Gagal Syarat: Dikunci sepenuhnya (pointer-events-none elak hover dan klik)
-                submitBtn.className = btnClasses + "bg-[#1b8354] cursor-not-allowed opacity-50 pointer-events-none";
-            }
+    // Logik Kotak & Amaran
+    if (val.length > 0) {
+        if (isMobileValid) {
+            // Sempurna (Hijau)
+            mobileInput.classList.remove(
+                'border-gray-300',
+                'border-[#85CFAB]',
+                'focus:border-[#85CFAB]',
+                'focus:ring-[#E7F5EE]',
+                'text-[#dc2626]'
+            );
+
+            mobileInput.classList.add(
+                'border-[#85CFAB]',
+                'focus:border-[#85CFAB]',
+                'focus:ring-[#E7F5EE]',
+                'text-gray-800'
+            );
+
+            errorMsg.classList.add('hidden');
+
+            // Aktifkan button submit
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('cursor-not-allowed', 'opacity-50', 'opacity-10');
+            submitBtn.classList.add('cursor-pointer', 'opacity-100');
+
+        } else {
+            // Tak Sempurna / Huruf dimasukkan (Merah)
+            mobileInput.classList.remove(
+                'border-gray-300',
+                'border-[#85CFAB]',
+                'focus:border-[#85CFAB]',
+                'focus:ring-[#E7F5EE]',
+                'text-gray-800'
+            );
+
+            mobileInput.classList.add(
+                'border-[#85CFAB]',
+                'focus:border-[#85CFAB]',
+                'focus:ring-[#E7F5EE]',
+                'text-gray-800'
+            );
+
+            errorMsg.classList.remove('hidden');
+
+            // Disable button submit
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('cursor-pointer', 'opacity-100');
+            submitBtn.classList.add('cursor-not-allowed', 'opacity-50');
         }
+
+    } else {
+        // Tiada Input (Kelabu asal)
+        mobileInput.classList.remove(
+            'border-[#85CFAB]',
+            'focus:border-[#85CFAB]',
+            'focus:ring-[#E7F5EE]',
+            'text-[#dc2626]',
+            'border-[#85CFAB]',
+            'focus:border-[#85CFAB]',
+            'focus:ring-[#E7F5EE]',
+            'text-[#85CFAB]'
+        );
+
+        mobileInput.classList.add(
+            'border-gray-300',
+            'focus:border-[#85CFAB]',
+            'focus:ring-[#E7F5EE]',
+            'text-gray-800'
+        );
+
+        errorMsg.classList.add('hidden');
+
+        // Disable button submit
+        submitBtn.disabled = true;
+        submitBtn.classList.remove('cursor-pointer', 'opacity-100');
+        submitBtn.classList.add('cursor-not-allowed', 'opacity-50');
+    }
+}
 
         function submitReportForm(e) {
             e.preventDefault();
@@ -1879,11 +1929,11 @@ function openGuideModal(e) {
     btnPreview.classList.add(
       "opacity-50",
       "pointer-events-none",
-      "bg-[#85CFAB]"
+      "bg-[#1b8354]"
     );
     btnPreview.classList.remove(
-      "bg-[#198754]",
-      "hover:opacity-90"
+      "bg-[#82C7A6]",
+      "hover:opacity-100"
     );
   }
 
@@ -2021,11 +2071,12 @@ function selectGuideLang(langCode, langName, element) {
     btnPreview.classList.remove(
       "opacity-50",
       "pointer-events-none",
-      "bg-[#85CFAB]"
+      "bg-[#1b8354]"
     );
     btnPreview.classList.add(
-      "bg-[#198754]",
-      "hover:opacity-50"
+      "bg-[#1b8354]",
+      "hover:bg-[#82C7A6]",
+      "hover:opacity-100"
     );
   }
 
