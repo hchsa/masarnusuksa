@@ -55,7 +55,6 @@
             background-size: 1920px, 480px;
             background-position: top left;
         }
-
         .tab-container {
             overscroll-behavior-x: contain;
         }
@@ -66,7 +65,6 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-
         .survey-arrow {
             margin-left: 8px;
         }
@@ -90,11 +88,11 @@
             margin: 4px 0;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #c8d8d0;
             border-radius: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #c8d8d0;
         }
 
     </style>
@@ -113,10 +111,11 @@
         </div>
 
         <!-- Ruang Kandungan Boleh Skrol -->
-        <div class="flex-1 w-full overflow-y-auto hide-scroll relative z-10 flex flex-col pb-[120px] lg:pb-[80px]">
+        <div class="flex-1 w-full overflow-y-auto open-scroll relative z-10 flex flex-col pb-[120px] lg:pb-[80px]">
             
             <!-- Header (Lebar Maksimum 1920px dengan padding yang sekata dari 375px) -->
             <header class="pt-[16px] px-[16px] sm:px-[24px] lg:px-[32px] 2xl:px-[64px] pb-[0] flex items-center justify-between relative z-50 w-full max-w-[1920px] mx-auto lg:pt-[16px] mb-[0]">
+                
                 <!-- Logo -->
                 <div class="bg-transparent rounded-[12px]">
                     <img src="https://drive.google.com/thumbnail?id=1qPW0CD4g2l4FKDaRUfpimewQ7H9tez3A&sz=w2000" alt="تصريح" class="w-[120px] sm:w-[135.95px] h-auto object-contain" />
@@ -134,6 +133,7 @@
                         <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors" data-i18n="langAr">العربية</button>
                         <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
                     </div>
+                    
                 </div>
             </header>
 
@@ -338,7 +338,7 @@
                     <!-- Content: Provider -->
                     <div id="content-provider" class="block">
                         <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[24px]">
-                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
+                            <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
                             <hr class="border-t border-gray-200 mb-[20px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                             
                             <div class="grid grid-cols-2 gap-y-[16px] gap-x-[12px] sm:gap-x-[20px] w-full mb-[24px]">
@@ -354,22 +354,22 @@
                                     <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblHospMadinah">مركز الضيافة في المدينة</p>
                                     <p class="hidden" data-i18n="valHospMadinah">-</p>
                                 </div>
-                                <div class="flex flex-col gap-[0px] mb-[0px]">
+                                <div class="flex flex-col gap-[0px]">
                                     <p class="text-transparent text-[13px] font-normal m-[0px]" data-i18n="lblSpl">رقم SPL</p>
                                     <p class="font-normal text-[13px] text-transparent tracking-wide m-[0px]" data-i18n="valSpl">32</p>
                                 </div>
                             </div>
 
-                            <div class="w-full mb-[12px]">
-                                <p class="text-gray-600 text-[15px] sm:text-[16px] font-semibold m-[0px]" data-i18n="lblProviderLoc">مكان شركة تقديم الخدمة</p>
+                            <div class="w-full mb-[20px]">
+                                <p class="text-gray-700 text-[15px] sm:text-[16px] font-normal m-[0px]" data-i18n="lblProviderLoc">مكان شركة تقديم الخدمة</p>
                             </div>
 
-                            <div class="relative w-full h-[200px] sm:h-[252px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                            <div class="relative w-full h-[300px] sm:h-[300px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
                                 <iframe src="https://maps.google.com/maps?q=21.4162985,39.8606299&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none ltr:left-1/2 ltr:-translate-x-1/2 lg:ltr:left-[12px] lg:ltr:translate-x-0">
                                     <a href="https://www.google.com/maps/place/21%C2%B024'58.7%22N+39%C2%B051'38.3%22E/@21.4162985,39.8606299,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
-                                        <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] object-contain"/>
-                                        <span class="text-[13px] sm:text-[14px] text-gray-700 font-normal" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] object-contain shrink-0"/>
+                                        <span class="text-[13px] sm:text-[14px] text-gray-700 font-normal whitespace-nowrap min-w-max" data-i18n="btnDirection">الإتجاه للموقع</span>
                                     </a>
                                 </div>
                             </div>
@@ -379,7 +379,7 @@
                     <!-- Content: Housing -->
                     <div id="content-housing" class="hidden">
                         <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[20px]">
-                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
+                            <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
                             <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                     
                             <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative item-center ltr:pl-[0px] sm:ltr:pl-[32px]">
@@ -399,18 +399,18 @@
 
                             <!-- Panel Makkah -->
                             <div id="loc-makkah" class="block">
-                                <div class="flex items-start gap-[12px] mb-[16px]">
+                                <div class="flex items-start gap-[12px] mb-[12px]">
                                     <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]">
-                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-semibold text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMakkahHotel">
+                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-normal text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMakkahHotel">
                                         10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع
                                     </p>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] sm:h-[300px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.4312536,39.8300529&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none ltr:left-1/2 ltr:-translate-x-1/2 lg:ltr:left-[12px] lg:ltr:translate-x-0">
                                         <a href="https://www.google.com/maps/place/21%C2%B025'52.5%22N+39%C2%B049'48.2%22E/@21.4312536,39.8300529,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
-                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                                        
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] object-contain shrink-0"/>                                        
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap min-w-max" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
@@ -418,18 +418,18 @@
 
                             <!-- Panel Madinah -->
                             <div id="loc-madinah" class="hidden">
-                                <div class="flex items-start gap-[12px] mb-[16px]">
+                                <div class="flex items-start gap-[12px] mb-[12px]">
                                     <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]" />
-                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-semibold text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMadinahHotel">
+                                    <p class="flex-1 min-w-0 text-[14px] sm:text-[16px] font-normal text-gray-800 leading-[22px] sm:leading-[24px] m-[0px] rtl:text-right ltr:text-left" data-i18n="descMadinahHotel">
                                         10007095 - فندق اعمار رويال للخدمات الفندقية - بضاعة شارع الملك فيصل
                                     </p>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] sm:h-[300px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=24.4734394,39.6133089&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none ltr:left-1/2 ltr:-translate-x-1/2 lg:ltr:left-[12px] lg:ltr:translate-x-0">
                                         <a href="https://www.google.com/maps/place/24%C2%B028'24.4%22N+39%C2%B036'47.9%22E/@24.4734394,39.6133089,1156m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
-                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] object-contain shrink-0"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap min-w-max" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
@@ -437,7 +437,7 @@
 
                             <!-- Panel Mina -->
                             <div id="loc-mina" class="hidden">
-                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
+                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[4px]">
                                     <div class="flex flex-col gap-[4px]">
                                         <div class="flex items-center gap-[8px] sm:gap-[12px]">
                                             <img src="https://drive.google.com/thumbnail?id=16pVWjLwEkLf-qjRfn3Egi85ZarUNDrVZ&sz=w100" alt="Camp" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
@@ -460,12 +460,12 @@
                                         <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[16px]">10</span>
                                     </div>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] sm:h-[300px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.4217833,39.893677&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none ltr:left-1/2 ltr:-translate-x-1/2 lg:ltr:left-[12px] lg:ltr:translate-x-0">
                                         <a href="https://www.google.com/maps/place/21%C2%B025'18.4%22N+39%C2%B053'37.2%22E/@21.4217833,39.893677,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
-                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] object-contain shrink-0"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap min-w-max" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
@@ -473,7 +473,7 @@
 
                             <!-- Panel Arafat -->
                             <div id="loc-arafat" class="hidden">
-                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
+                                <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[4px]">
                                     <div class="flex flex-col gap-[4px]">
                                         <div class="flex items-center gap-[8px] sm:gap-[12px]">
                                             <img src="https://drive.google.com/thumbnail?id=1FjN1Q1qkKo8CHqAQYTW61UfjFr-KNgxm&sz=w100" alt="Gate" class="w-[40px] sm:w-[50px] h-[40px] sm:h-[50px] shrink-0 object-cover -translate-y-[12px]" />
@@ -489,12 +489,12 @@
                                         <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">612</span>
                                     </div>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] sm:h-[300px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.3767959,39.9846318&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
+                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none ltr:left-1/2 ltr:-translate-x-1/2 lg:ltr:left-[12px] lg:ltr:translate-x-0">
                                         <a href="https://www.google.com/maps/place/21%C2%B022'36.5%22N+39%C2%B059'04.7%22E/@21.3767959,39.9846318,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
-                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-medium text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] object-contain shrink-0"/>                             
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap min-w-max" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
@@ -563,7 +563,7 @@
                             </div>
                             <div class="flex items-center gap-[8px] cursor-pointer" onclick="openGuideModal(event)">
                                 <span class="text-[14px] sm:text-[15px] underline decoration-1 underline-offset-4 text-[#256e5c]" data-i18n="guideCardDesc">استعرض أو حمّل دليل الحج</span>
-                                <i data-lucide="arrow-left" class="w-[16px] h-[16px] text-[#256e5c] rtl:rotate-0 ltr:rotate-180 shrink-0"></i>
+                               <img src="https://drive.google.com/thumbnail?id=1Kqd3bx8yiJFNDYAtco3FSxIUXQgVOpta&sz=w2000" class="w-[16px] h-[16px] object-contain shrink-0 ltr:rotate-180 rtl:rotate-0"/>
                             </div>
                         </div>
                     </div>
@@ -666,9 +666,10 @@
                         <div class="flex flex-col gap-[20px] sm:gap-[24px]">
                             
                             <!-- MAP CARD 1: Masjid Haram -->
-                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[20px] overflow-hidden shadow-sm group border border-gray-100">
-                                <img src="https://drive.google.com/thumbnail?id=1ZP7FZKqWRnQiFRptbZ0pxQB4l6jAKVBd&sz=w2000" alt="المسجد الحرام" class="w-full h-full object-cover transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
+                            <div class="relative w-full h-[250px] sm:h-[250px] lg:h-[250px] rounded-[20px] overflow-hidden group border border-gray-100">
+                                <img src="https://drive.google.com/thumbnail?id=1ZP7FZKqWRnQiFRptbZ0pxQB4l6jAKVBd&sz=w2000" alt="المسجد الحرام" class="w-full h-full object-cover brightness-[1.05] transition-transform duration-500">
+                            <!-- Overlay gelap separuh bawah sahaja -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/95 via-[#101522]/45 to-transparent pointer-events-none"></div>
                                 <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
                                     <div class="text-[#fff] text-[16px] sm:text-[20px] font-normal pointer-events-auto" data-i18n="mapMasjidHaram">المسجد الحرام</div>
                                 </div>
@@ -680,9 +681,10 @@
                             </div>
 
                             <!-- MAP CARD 2: Masjid Nabawi -->
-                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[20px] overflow-hidden shadow-sm group border border-gray-100">
-                                <img src="https://drive.google.com/thumbnail?id=1OUKM5eybkWQxgnTc1xtw21hd7dPcWRke&sz=w2000" alt="المسجد النبوي" class="w-full h-full object-cover transition-transform duration-500">
-                                <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
+                            <div class="relative w-full h-[250px] sm:h-[250px] lg:h-[250px] rounded-[20px] overflow-hidden group border border-gray-100">
+                                <img src="https://drive.google.com/thumbnail?id=1OUKM5eybkWQxgnTc1xtw21hd7dPcWRke&sz=w2000" alt="المسجد النبوي" class="w-full h-full object-cover brightness-[1.05] transition-transform duration-500">
+                            <!-- Overlay gelap separuh bawah sahaja -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/95 via-[#101522]/45 to-transparent pointer-events-none"></div>
                                 <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
                                     <div class="text-[#fff] text-[16px] sm:text-[20px] font-normal pointer-events-auto" data-i18n="mapMasjidNabawi">المسجد النبوي</div>
                                 </div>
@@ -773,67 +775,207 @@
         </div>
 
         <!-- MODAL: HAJJ GUIDE -->
-        <div id="guide-modal" class="hidden absolute inset-0 z-[100] flex items-center justify-center bg-gray-600/30 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
-            <div class="bg-white w-full sm:max-w-[420px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col ltr:text-left rtl:text-right text-start border border-gray-100">
+        <div 
+  id="guide-modal" 
+  class="
+    hidden 
+    absolute inset-0 
+    z-[100] 
+    flex items-center justify-center 
+    bg-gray-600/30 
+    backdrop-blur-sm 
+    px-[16px] 
+    transition-opacity duration-300
+  "
+>
+  <div 
+    class="
+      bg-white 
+      w-full 
+      max-w-[420px]
+      lg:max-w-[452px]
+      min-h-fit
+      rounded-[24px] 
+      pt-[24px] 
+      px-[16px] sm:px-[20px] 
+      pb-[20px]
+      shadow-[0_10px_40px_rgba(0,0,0,0.1)] 
+      relative 
+      flex flex-col 
+      text-start 
+      border border-gray-100 
+      max-h-[90vh]
+    "
+  >
                 
                 <!-- Butang Close X -->
                 <button type="button" onclick="closeGuideModal()" class="absolute top-[20px] sm:top-[24px] rtl:left-[20px] sm:rtl:left-[24px] ltr:right-[20px] sm:ltr:right-[24px] font-normal text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0 z-10">
-                    <i data-lucide="x" stroke-width="1.75" class="font-normal w-[22px] sm:w-[24px] h-[22px] sm:h-[24px]"></i>
+                    <i data-lucide="x" stroke-width="1.5" class="lucide lucide-x mt-[8px] mx-[-4px] font-normal w-[24px] sm:w-[28px] h-[24px] sm:h-[28px]"></i>
                 </button>
 
-                <h3 class="text-[20px] sm:text-[22px] font-normal text-gray-800 m-[0px] mb-[16px] sm:mb-[20px]" data-i18n="guideModalTitle">دليلك الإرشادي للحج</h3>
-                <hr class="border-t border-gray-100 mb-[20px] -mx-[24px] sm:-mx-[32px]">
+                <h3 class="text-[24px] sm:text-[24px] font-normal text-gray-800 m-[0px] ltr:mt-[0px] sm:ltr:mt-[0px] mb-[16px] sm:mb-[20px]" data-i18n="guideModalTitle">دليلك الإرشادي للحج</h3>
+                <hr class="border-t border-gray-100 mb-[20px] sm:mb-[28px] -mx-[16px] sm:-mx-[20px]">
 
-                <p class="font-normal text-[15px] sm:text-[16px] text-gray-600 leading-snug mb-[16px]" data-i18n="guideModalSubtitle">يرجى اختيار لغة الدليل الإرشادي</p>
+                <p class="text-[16px] sm:text-[18px] font-base text-gray-700 flex gap-[4px] rtl:flex-row ltr:flex-row mb-[20px] sm:mb-[28px]" data-i18n="guideModalSubtitle">يرجى اختيار لغة الدليل الإرشادي</p>
                 
-                <div class="flex flex-col gap-[8px] mb-[32px]">
-                    <label class="text-[14px] sm:text-[15px] font-normal text-gray-500" data-i18n="guideModalLabel">
+                <div class="flex flex-col gap-[8px] mb-[4px]">
+                    <label class="text-[16px] sm:text-[18px] font-base text-gray-700 flex gap-[4px] rtl:flex-row ltr:flex-row" data-i18n="guideModalLabel">
                         لغة الدليل الإرشادي
                     </label>
                     
                     <!-- CUSTOM DROPDOWN -->
                     <div id="guide-select-wrapper" class="relative w-full">
-                        <button type="button" id="guide-custom-select-btn" onclick="toggleCustomGuideSelect()" class="w-full h-[48px] sm:h-[52px] border border-[#85CFAB] rounded-[16px] py-[10px] px-[16px] flex justify-between items-center bg-white transition-all focus:outline-none cursor-pointer">
-                            <span id="guide-selected-text" class="text-[15px] text-gray-400 font-normal" data-i18n="guideModalPlaceholder">اختر لغة الدليل الإرشادي</span>
+                        <button type="button" id="guide-custom-select-btn" onclick="toggleCustomGuideSelect()" class="w-full h-[60px] sm:h-[60px] border border-[#c9d7d2] rounded-[16px] py-[10px] px-[16px] flex justify-between items-center bg-white transition-all focus:outline-none cursor-pointer hover:border-[#9fc6b3] hover:shadow-[#b9c7c2] hover:bg-[#fff] focus:border-[#85CFAB] focus:shadow-[#a2a8a6]">
+                            <span id="guide-selected-text" class="text-[16px] sm:text-[18px] font-base text-gray-400 flex gap-[4px] rtl:flex-row ltr:flex-row" data-i18n="guideModalPlaceholder">اختر لغة الدليل الإرشادي</span>
                             <i id="guide-select-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-[#256e5c] transition-transform duration-300"></i>
                         </button>
                         
-                        <div id="guide-custom-dropdown" class="hidden absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
-                            <ul class="max-h-[210px] overflow-y-auto custom-scrollbar p-[8px] flex flex-col gap-[2px] m-0 rtl:text-right text-start">
-                                <li onclick="selectGuideLang('ar', 'العربية', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">العربية</li>
-                                <li onclick="selectGuideLang('en', 'English', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">English</li>
-                                <li onclick="selectGuideLang('fr', 'French', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Français</li>
-                                <li onclick="selectGuideLang('bn', 'Bengali', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">বাংলা</li>
-                                <li onclick="selectGuideLang('hi', 'Indian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">हिन्दी</li>
-                                <li onclick="selectGuideLang('id', 'Indonesian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Bahasa Indonesia</li>
-                                <li onclick="selectGuideLang('ms', 'Malaysian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Bahasa Melayu</li>
-                                <li onclick="selectGuideLang('uz', 'Özbek', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Oʻzbekcha</li>
-                                <li onclick="selectGuideLang('prs', 'Persian (Afghanistan', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">دری</li>
-                                <li onclick="selectGuideLang('fa', 'Persian (Iran)', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">فارسی</li>
-                                <li onclick="selectGuideLang('ru', 'Russian', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Русский</li>
-                                <li onclick="selectGuideLang('tr', 'Turkish', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">Türkçe</li>
-                                <li onclick="selectGuideLang('ur', 'Urdu', this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-gray-700 font-normal cursor-pointer hover:bg-[#E7F5EE] transition-colors border border-transparent">اردو</li>
+                        <div id="guide-custom-dropdown" class="hidden absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-gray-200 rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] z-50 overflow-hidden">
+                            <ul class="max-h-[224px] overflow-y-auto custom-scrollbar p-[8px] flex flex-col gap-[2px] m-0 rtl:text-right text-start">
+                                <li dir="auto" data-lang-code="ar" data-lang-key="guideLang_ar" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">العربية</li>
+                                <li dir="auto" data-lang-code="en" data-lang-key="guideLang_en" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">English</li>
+                                <li dir="auto" data-lang-code="fr" data-lang-key="guideLang_fr" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Français</li>
+                                <li dir="auto" data-lang-code="bn" data-lang-key="guideLang_bn" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">বাংলা</li>
+                                <li dir="auto" data-lang-code="hi" data-lang-key="guideLang_hi" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">हिन्दी</li>
+                                <li dir="auto" data-lang-code="id" data-lang-key="guideLang_id" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Bahasa Indonesia</li>
+                                <li dir="auto" data-lang-code="ms" data-lang-key="guideLang_ms" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Bahasa Melayu</li>
+                                <li dir="auto" data-lang-code="uz" data-lang-key="guideLang_uz" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Oʻzbekcha</li>
+                                <li dir="auto" data-lang-code="prs" data-lang-key="guideLang_prs" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">دری</li>
+                                <li dir="auto" data-lang-code="fa" data-lang-key="guideLang_fa" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">فارسی</li>
+                                <li dir="auto" data-lang-code="ru" data-lang-key="guideLang_ru" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Русский</li>
+                                <li dir="auto" data-lang-code="tr" data-lang-key="guideLang_tr" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">Türkçe</li>
+                                <li dir="auto" data-lang-code="ur" data-lang-key="guideLang_ur" onclick="selectGuideLangFromItem(this)" class="guide-lang-item px-[12px] py-[10px] rounded-[8px] text-[15px] text-[#1f2937] font-normal cursor-pointer hover:bg-[#f2faf7] transition-colors border border-transparent">اردو</li>
                             </ul>                       
                          </div>
                     </div>
 
-                <!-- Butang Preview & Download -->
-                <div class="flex gap-[12px] w-full mt-auto">
-                    <!-- Button Download -->
-                    <button type="button" id="btn-guide-download" onclick="downloadGuide()" class="flex-[1.2] h-[48px] sm:h-[52px] bg-white border border-[#85CFAB] text-[#85CFAB] text-[15px] sm:text-[16px] font-normal rounded-[12px] transition-all opacity-50 pointer-events-none flex items-center justify-center gap-[8px]">
-                        <span data-i18n="btnDownload">تحميل الدليل</span>
-                        <i data-lucide="download" class="w-[18px] h-[18px] mt-[-2px]"></i>
-                    </button>
-                    <!-- Button Preview -->
-                    <button type="button" id="btn-guide-preview" onclick="previewGuide()" class="flex-1 h-[48px] sm:h-[52px] bg-[#85CFAB] text-white text-[15px] sm:text-[16px] font-normal rounded-[12px] transition-all opacity-50 pointer-events-none flex items-center justify-center gap-[8px]">
-                        <span data-i18n="btnPreview">استعراض</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+<!-- Butang Preview & Download -->
+<div 
+  class="
+    flex 
+    flex-col 
+    lg:flex-row
+    lg:rtl:flex-row-reverse 
+    gap-[12px] 
+    w-full 
+    mt-[20px]
+    lg:mt-[12px]
+    items-stretch
+    lg:items-center
+    lg:ltr:justify-end
+    lg:rtl:justify-start
+  "
+>
 
-    </div>
+  <!-- Preview Wrapper -->
+  <div 
+    id="btn-guide-preview-wrapper" 
+    class="
+      w-full 
+      lg:w-auto 
+      cursor-not-allowed 
+      order-1
+    "
+  >
+    <button 
+      type="button" 
+      id="btn-guide-preview" 
+      onclick="previewGuide()" 
+      disabled
+      class="
+        w-full 
+        lg:w-auto
+        min-h-[54px] 
+        lg:min-h-[48px]
+        h-auto 
+        px-[28px] 
+        py-[8px] 
+        bg-[#85CFAB] 
+        text-white 
+        text-[16px] 
+        font-normal 
+        rounded-[12px] 
+        transition-all duration-300 
+        opacity-50 
+        pointer-events-none 
+        inline-flex items-center justify-center 
+        gap-[8px] 
+        whitespace-nowrap
+      "
+    >
+      <span 
+        class="leading-[1.15] text-center whitespace-nowrap" 
+        data-i18n="btnPreview"
+dir="auto"
+      >
+        استعراض
+      </span>
+    </button>
+  </div>
 
+  <!-- Download Wrapper -->
+  <div 
+    id="btn-guide-download-wrapper" 
+    class="
+      w-full 
+      lg:w-auto 
+      cursor-not-allowed 
+      order-2
+    "
+  >
+    <button 
+      type="button" 
+      id="btn-guide-download" 
+      onclick="downloadGuide()" 
+      disabled
+  dir="rtl"
+      class="
+        w-full 
+        lg:w-auto
+        min-h-[54px] 
+        lg:min-h-[48px]
+        h-auto 
+        px-[18px] 
+        py-[8px] 
+        bg-white 
+        border border-[#85CFAB] 
+        text-[#85CFAB] 
+        text-[16px] 
+        font-normal 
+        rounded-[12px] 
+        transition-all duration-300 
+        opacity-50 
+        pointer-events-none 
+        inline-flex items-center justify-center 
+        gap-[8px] 
+        whitespace-nowrap
+      "
+    >
+      <i 
+        id="btn-guide-download-icon"
+        data-lucide="download" 
+        class="w-[18px] h-[18px] mt-[-2px] shrink-0"
+      ></i>
+
+      <i 
+        id="btn-guide-loading-icon"
+        data-lucide="loader-circle" 
+        class="hidden w-[18px] h-[18px] mt-[-2px] shrink-0 animate-spin"
+      ></i>
+
+      <span 
+        id="btn-guide-download-text" 
+        class="leading-[1.15] text-center whitespace-nowrap" 
+        data-i18n="btnDownload"
+dir="auto"
+      >
+        تحميل الدليل
+      </span>
+    </button>
+  </div>
+
+</div>
+                    
     <script>
         // MASUKKAN GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
         const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRgPEpdWXLLCd--IXOj2-cfqfceMJK3hAjLiX7v_tL8EO1s0tG8vSDWom6Z8tA_WB6/exec"; // <-- GANTIKAN URL ANDA DI SINI!
@@ -934,7 +1076,20 @@
                 'guideModalLabel': 'لغة الدليل الإرشادي',
                 'guideModalPlaceholder': 'اختر لغة الدليل الإرشادي',
                 'btnPreview': 'استعراض',
-                'btnDownload': 'تحميل الدليل'
+                'btnDownload': 'تحميل الدليل',
+                 guideLang_ar: "العربية",
+                 guideLang_en: "English",
+                 guideLang_fr: "Français",
+                 guideLang_bn: "বাংলা",
+                 guideLang_hi: "हिन्दी",
+                 guideLang_id: "Bahasa Indonesia",
+                 guideLang_ms: "Bahasa Melayu",
+                 guideLang_uz: "Oʻzbekcha",
+                 guideLang_prs: "دری",
+                 guideLang_fa: "فارسی",
+                 guideLang_ru: "Русский",
+                 guideLang_tr: "Türkçe",
+                 guideLang_ur: "اردو"
             },
             'EN': {
                 'pageTitle': 'PilgrimDashboard',
@@ -1030,7 +1185,20 @@
                 'guideModalLabel': 'Guide Language',
                 'guideModalPlaceholder': 'Select guide language',
                 'btnPreview': 'Preview',
-                'btnDownload': 'Download Guide'
+                'btnDownload': 'Download Guide',
+                 guideLang_ar: "Arabic",
+                 guideLang_en: "English",
+                 guideLang_fr: "French",
+                 guideLang_bn: "Bengali",
+                 guideLang_hi: "Indian",
+                 guideLang_id: "Indonesian",
+                 guideLang_ms: "Malaysian",
+                 guideLang_uz: "Özbek",
+                 guideLang_prs: "Persian (Afghanistan)",
+                 guideLang_fa: "Persian (Iran)",
+                 guideLang_ru: "Russian",
+                 guideLang_tr: "Turkish",
+                 guideLang_ur: "Urdu"
             }
         };
 
@@ -1128,6 +1296,7 @@
             currentLanguage = lang;
             document.getElementById('lang-dropdown').classList.add('hidden');
             document.getElementById('current-lang').textContent = lang;
+            updateGuideLanguageLabels();
 
             // Reset chevron rotation
             document.getElementById('lang-chevron').classList.remove('rotate-180');
@@ -1332,7 +1501,7 @@
                 if (guideDropdown && !guideDropdown.classList.contains('hidden')) {
                     guideDropdown.classList.add('hidden');
                     if (guideChevron) guideChevron.classList.remove('rotate-180');
-                    if (guideBtn) guideBtn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
+                    if (guideBtn) guideBtn.classList.remove();
                 }
             }
         }
@@ -1558,143 +1727,430 @@
             document.getElementById('btn-open-report').classList.add('inline-flex');
         }
 
-        // --- FUNGSI HAJJ GUIDE (CUSTOM DROPDOWN) ---
-        const guideLinks = {
-            'ar': { preview: 'https://media.nusuk.sa/cms/uploads/dlyl_alhj_almkhtsr_dyjytal_364cfccf85.pdf', download: 'https://media.nusuk.sa/cms/uploads/dlyl_alhj_almkhtsr_dyjytal_364cfccf85.pdf' },
-            'en': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_English_Digital_df2f2be215.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_English_Digital_df2f2be215.pdf' },
-            'fr': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_French_Digital_83720242e3.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_French_Digital_83720242e3.pdf' },
-            'bn': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Bengali_Digital_856e70c7a8.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Bengali_Digital_856e70c7a8.pdf' },
-            'hi': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indian_Digital_6d42b3e318.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indian_Digital_6d42b3e318.pdf' },
-            'id': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indo_Digital_8bae439bbd.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indo_Digital_8bae439bbd.pdf' },
-            'ms': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Malysian_Digital_87e2039f31.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Malysian_Digital_87e2039f31.pdf' },
-            'uz': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Oezbeki_Digital_ee74cfb7d3.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Oezbeki_Digital_ee74cfb7d3.pdf' },
-            'prs': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Afgani_Digital_4463d77037.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Afgani_Digital_4463d77037.pdf' },
-            'fa': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Irani_Digital_531daae37b.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Irani_Digital_531daae37b.pdf' },
-            'ru': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Russian_Digital_95d3cb3015.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Russian_Digital_95d3cb3015.pdf' },
-            'tr': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Turkish_Digital_e4afa266b7.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Turkish_Digital_e4afa266b7.pdf' },
-            'ur': { preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Urdu_Pakistani_Digital_89c278e816.pdf', download: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Urdu_Pakistani_Digital_89c278e816.pdf' }
-        };
+        // =====================================================
+  // FUNGSI HAJJ GUIDE - CUSTOM DROPDOWN
+  // =====================================================
 
-        let selectedGuideLang = "";
+function selectGuideLangFromItem(element) {
+  const langCode = element.getAttribute("data-lang-code");
+  const langName = element.textContent.trim();
 
-        function openGuideModal(e) {
-            if (e) e.preventDefault();
-            const modal = document.getElementById('guide-modal');
-            const textSpan = document.getElementById('guide-selected-text');
-            const btnPreview = document.getElementById('btn-guide-preview');
-            const btnDownload = document.getElementById('btn-guide-download');
-            
-            // 1. Reset dropdown text
-            selectedGuideLang = "";
-            if(textSpan && translations[currentLanguage]) {
-                textSpan.textContent = translations[currentLanguage]['guideModalPlaceholder'];
-                textSpan.classList.add('text-gray-400');
-                textSpan.classList.remove('text-gray-900');
-            }
-            
-            // 2. Buang highlight aktif dari semua pilihan
-            document.querySelectorAll('.guide-lang-item').forEach(el => {
-                el.classList.remove('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
-                el.classList.add('border-transparent');
-            });
-            
-            // 3. Matikan / Kelabukan Butang
-            if(btnPreview && btnDownload) {
-                btnPreview.classList.add('opacity-50', 'pointer-events-none');
-                btnDownload.classList.add('opacity-50', 'pointer-events-none');
-                btnPreview.classList.remove('cursor-pointer', 'bg-[#198754]', 'hover:bg-[#146c49]');
-                btnPreview.classList.add('bg-[#85CFAB]');
-                btnDownload.classList.remove('cursor-pointer', 'border-[#198754]', 'text-[#198754]', 'hover:bg-[#E7F5EE]');
-                btnDownload.classList.add('border-[#85CFAB]', 'text-[#85CFAB]');
-            }
-            
-            // 4. Pastikan menu tertutup semasa dibuka
-            const guideDropdown = document.getElementById('guide-custom-dropdown');
-            const guideChevron = document.getElementById('guide-select-chevron');
-            const guideBtn = document.getElementById('guide-custom-select-btn');
-            
-            if(guideDropdown) guideDropdown.classList.add('hidden');
-            if(guideChevron) guideChevron.classList.remove('rotate-180');
-            if(guideBtn) guideBtn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
+  selectGuideLang(langCode, langName, element);
+}
 
-            // 5. Akhir sekali, tayangkan Modal
-            modal.classList.remove('hidden');
-        }
+function updateGuideLanguageLabels() {
+  document.querySelectorAll(".guide-lang-item").forEach((item) => {
+    const key = item.getAttribute("data-lang-key");
 
-        function closeGuideModal() {
-            document.getElementById('guide-modal').classList.add('hidden');
-        }
+    if (
+      key &&
+      translations[currentLanguage] &&
+      translations[currentLanguage][key]
+    ) {
+      item.textContent = translations[currentLanguage][key];
+    }
 
-        function toggleCustomGuideSelect() {
-            const dropdown = document.getElementById('guide-custom-dropdown');
-            const chevron = document.getElementById('guide-select-chevron');
-            const btn = document.getElementById('guide-custom-select-btn');
+    item.setAttribute("dir", "auto");
+  });
+}
 
-            if(dropdown) dropdown.classList.toggle('hidden');
-            if(chevron) chevron.classList.toggle('rotate-180');
-            
-            if(dropdown && !dropdown.classList.contains('hidden')) {
-                if(btn) btn.classList.add('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
-            } else {
-                if(btn) btn.classList.remove('border-[#85CFAB]', 'ring-[3px]', 'ring-[#E7F5EE]');
-            }
-        }
+  const guideLinks = {
+    'ar': {
+      preview: 'https://media.nusuk.sa/cms/uploads/dlyl_alhj_almkhtsr_dyjytal_364cfccf85.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1-79fzefAJLU9rT1B_7VIU5tgnFRyPy7P'
+    },
+    'en': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_English_Digital_df2f2be215.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1BofxSFpxsd3z7OT0TutMAvrQ06vnZn9A'
+    },
+    'fr': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_French_Digital_83720242e3.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1jL3CQKypK8_Afk5MwbN3AyVVOX1FCHyT'
+    },
+    'bn': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Bengali_Digital_856e70c7a8.pdf',
+      download: 'https:https://drive.google.com/uc?export=download&id=1oRunUXeniT25MdPE3lYdyi1VZ3HshMDm'
+    },
+    'hi': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indian_Digital_6d42b3e318.pdf',
+      download: 'https:https://drive.google.com/uc?export=download&id=14Ice89JVBcgzzzWkwVETbBLowWRoaw4r'
+    },
+    'id': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Indo_Digital_8bae439bbd.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1oODLUuxTJAvHaqTPGgtYzge7WWZ5xZNb'
+    },
+    'ms': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Malysian_Digital_87e2039f31.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1Hk4mjsCqMQJhayNBT7-lKM7BsuUwdyW6'
+    },
+    'uz': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Oezbeki_Digital_ee74cfb7d3.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1GhVMW8-vuVXbguttdeb-LRm8b9QDRwn2'
+    },
+    'prs': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Afgani_Digital_4463d77037.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1gQhUVF4wG_bwaxHM0D54GUFOHTUHjjPW'
+    },
+    'fa': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Irani_Digital_531daae37b.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1OSL9HsAkTkLUgZOZm8atMZFIsg2XlnEO'
+    },
+    'ru': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Russian_Digital_95d3cb3015.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1A5x-flXY8SC5YGh65VhHk6FlzCLMRziG'
+    },
+    'tr': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Turkish_Digital_e4afa266b7.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1egKp5lhdtY2o3NZVBvQWmnJ0Hru0EvGY'
+    },
+    'ur': {
+      preview: 'https://media.nusuk.sa/cms/uploads/Short_Hajj_Guide_Urdu_Pakistani_Digital_89c278e816.pdf',
+      download: 'https://drive.google.com/uc?export=download&id=1LnMUs870xu9BaVNw4QDfvhS7Qs13I6-5'
+    }
+  };
 
-        function selectGuideLang(langCode, langName, element) {
-            selectedGuideLang = langCode;
-            
-            // Kemaskini teks pada butang pemilih
-            const textSpan = document.getElementById('guide-selected-text');
-            if(textSpan) {
-                textSpan.textContent = langName;
-                textSpan.classList.remove('text-gray-400');
-                textSpan.classList.add('text-gray-900');
-            }
+  let selectedGuideLang = "";
 
-            // Set styling pada kotak bahasa yang dipilih (Border hijau tua, background hijau cair)
-            document.querySelectorAll('.guide-lang-item').forEach(el => {
-                el.classList.remove('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
-                el.classList.add('border-transparent');
-            });
-            element.classList.remove('border-transparent');
-            element.classList.add('bg-[#E7F5EE]', 'text-[#198754]', 'border-[#198754]');
+  // =====================================================
+// OPEN MODAL
+// =====================================================
 
-            // Tutup senarai selepas dipilih
-            toggleCustomGuideSelect();
+function openGuideModal(e) {
+  if (e) e.preventDefault();
 
-            // Hidupkan / Aktifkan Butang Preview & Download
-            const btnPreview = document.getElementById('btn-guide-preview');
-            const btnDownload = document.getElementById('btn-guide-download');
-            
-            if(btnPreview && btnDownload) {
-                btnPreview.classList.remove('opacity-50', 'pointer-events-none', 'bg-[#85CFAB]');
-                btnPreview.classList.add('cursor-pointer', 'bg-[#198754]', 'hover:bg-[#146c49]');
-                
-                btnDownload.classList.remove('opacity-50', 'pointer-events-none', 'border-[#85CFAB]', 'text-[#85CFAB]');
-                btnDownload.classList.add('cursor-pointer', 'border-[#198754]', 'text-[#198754]', 'hover:bg-[#E7F5EE]');
-            }
-        }
+  const modal = document.getElementById("guide-modal");
+  const textSpan = document.getElementById("guide-selected-text");
+  const btnPreview = document.getElementById("btn-guide-preview");
+  const btnDownload = document.getElementById("btn-guide-download");
+  const previewWrapper = document.getElementById("btn-guide-preview-wrapper");
+  const downloadWrapper = document.getElementById("btn-guide-download-wrapper");
+  const guideDropdown = document.getElementById("guide-custom-dropdown");
+  const guideChevron = document.getElementById("guide-select-chevron");
+  const guideBtn = document.getElementById("guide-custom-select-btn");
+  const downloadIcon = document.getElementById("btn-guide-download-icon");
+  const loadingIcon = document.getElementById("btn-guide-loading-icon");
 
-        function previewGuide() {
-            if (selectedGuideLang && guideLinks[selectedGuideLang] && guideLinks[selectedGuideLang].preview) {
-                window.open(guideLinks[selectedGuideLang].preview, '_blank');
-            } else {
-                alert("The preview link for this language has not been set yet.");
-            }
-        }
+  selectedGuideLang = "";
 
-        function downloadGuide() {
-            if (selectedGuideLang && guideLinks[selectedGuideLang] && guideLinks[selectedGuideLang].download) {
-                const link = document.createElement('a');
-                link.href = guideLinks[selectedGuideLang].download;
-                link.setAttribute('download', '');
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } else {
-                alert("The download link for this language has not been set yet.");
-            }
-        }
+  if (textSpan) {
+    if (typeof translations !== "undefined" && translations[currentLanguage]) {
+      textSpan.textContent = translations[currentLanguage]["guideModalPlaceholder"];
+    } else {
+      textSpan.textContent = "اختر لغة الدليل الإرشادي";
+    }
+
+    textSpan.classList.add("text-gray-400");
+    textSpan.classList.remove("text-gray-900");
+    textSpan.setAttribute("dir", "auto");
+  }
+
+  document.querySelectorAll(".guide-lang-item").forEach((el) => {
+    el.classList.remove(
+  
+    );
+    el.classList.add("border-transparent");
+  });
+
+  // Disable Download
+  if (btnDownload) {
+    btnDownload.disabled = true;
+    btnDownload.classList.add(
+      "opacity-50",
+      "pointer-events-none",
+      "border-[#85CFAB]",
+      "text-[#85CFAB]"
+    );
+    btnDownload.classList.remove(
+      "opacity-70",
+      "border-[#198754]",
+      "text-[#256e5c]",
+      "hover:bg-[#f0f7f4]"
+    );
+  }
+
+  if (downloadWrapper) {
+    downloadWrapper.classList.add("cursor-not-allowed");
+    downloadWrapper.classList.remove("cursor-pointer", "cursor-wait");
+  }
+
+  // Disable Preview
+  if (btnPreview) {
+    btnPreview.disabled = true;
+    btnPreview.classList.add(
+      "opacity-50",
+      "pointer-events-none",
+      "bg-[#85CFAB]"
+    );
+    btnPreview.classList.remove(
+      "bg-[#198754]",
+      "hover:opacity-90"
+    );
+  }
+
+  if (previewWrapper) {
+    previewWrapper.classList.add("cursor-not-allowed");
+    previewWrapper.classList.remove("cursor-pointer", "cursor-wait");
+  }
+
+  if (downloadIcon) downloadIcon.classList.remove("hidden");
+  if (loadingIcon) loadingIcon.classList.add("hidden");
+
+  if (guideDropdown) guideDropdown.classList.add("hidden");
+  if (guideChevron) guideChevron.classList.remove("rotate-180");
+  if (guideBtn) guideBtn.classList.remove();
+
+  if (modal) modal.classList.remove("hidden");
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+// =====================================================
+// CLOSE MODAL
+// =====================================================
+
+function closeGuideModal() {
+  const modal = document.getElementById("guide-modal");
+  if (modal) modal.classList.add("hidden");
+}
+
+// =====================================================
+// TOGGLE CUSTOM DROPDOWN
+// =====================================================
+
+function toggleCustomGuideSelect() {
+  const dropdown = document.getElementById("guide-custom-dropdown");
+  const chevron = document.getElementById("guide-select-chevron");
+  const btn = document.getElementById("guide-custom-select-btn");
+
+  if (!dropdown) return;
+
+  dropdown.classList.toggle("hidden");
+
+  if (chevron) {
+    chevron.classList.toggle("rotate-180");
+  }
+
+  if (!dropdown.classList.contains("hidden")) {
+    if (btn) {
+      btn.classList.add();
+    }
+  } else {
+    if (btn) {
+      btn.classList.remove();
+    }
+  }
+}
+
+// =====================================================
+// SELECT LANGUAGE
+// =====================================================
+
+function selectGuideLang(langCode, langName, element) {
+  selectedGuideLang = langCode;
+
+  const textSpan = document.getElementById("guide-selected-text");
+  const btnPreview = document.getElementById("btn-guide-preview");
+  const btnDownload = document.getElementById("btn-guide-download");
+  const previewWrapper = document.getElementById("btn-guide-preview-wrapper");
+  const downloadWrapper = document.getElementById("btn-guide-download-wrapper");
+
+  if (textSpan) {
+    textSpan.textContent = langName;
+    textSpan.classList.remove("text-gray-400");
+    textSpan.classList.add("text-gray-900");
+    textSpan.setAttribute("dir", "auto");
+  }
+
+  document.querySelectorAll(".guide-lang-item").forEach((el) => {
+    el.classList.remove(
+      "bg-[#ebfcf4]",
+      "bg-[#E7F5EE]",
+      "text-[#256e5c]",
+      "text-[#198754]",
+      "font-semibold",
+      "border-[#198754]"
+    );
+    el.classList.add( "border-transparent",
+      "font-normal",
+      "text-[#1f2937]");
+  });
+
+  if (element) {
+    element.classList.remove("border-transparent",
+      "font-normal",
+      "text-[#1f2937]");
+    element.classList.add("bg-[#ebfcf4]",
+      "text-[#256e5c]",
+      "font-semibold");
+  }
+
+  const dropdown = document.getElementById("guide-custom-dropdown");
+  const chevron = document.getElementById("guide-select-chevron");
+  const selectBtn = document.getElementById("guide-custom-select-btn");
+
+  if (dropdown) dropdown.classList.add("hidden");
+  if (chevron) chevron.classList.remove("rotate-180");
+  if (selectBtn) selectBtn.classList.remove();
+
+  // Enable Download
+  if (btnDownload) {
+    btnDownload.disabled = false;
+    btnDownload.classList.remove(
+      "opacity-50",
+      "pointer-events-none",
+      "border-[#85CFAB]",
+      "text-[#85CFAB]"
+    );
+    btnDownload.classList.add(
+      "border-[#198754]",
+      "text-[#256e5c]",
+      "hover:bg-[#f0f7f4]"
+    );
+  }
+
+  if (downloadWrapper) {
+    downloadWrapper.classList.remove("cursor-not-allowed", "cursor-wait");
+    downloadWrapper.classList.add("cursor-pointer");
+  }
+
+  // Enable Preview
+  if (btnPreview) {
+    btnPreview.disabled = false;
+    btnPreview.classList.remove(
+      "opacity-50",
+      "pointer-events-none",
+      "bg-[#85CFAB]"
+    );
+    btnPreview.classList.add(
+      "bg-[#198754]",
+      "hover:opacity-50"
+    );
+  }
+
+  if (previewWrapper) {
+    previewWrapper.classList.remove("cursor-not-allowed", "cursor-wait");
+    previewWrapper.classList.add("cursor-pointer");
+  }
+}
+
+// =====================================================
+// PREVIEW GUIDE
+// =====================================================
+
+function previewGuide() {
+  if (!selectedGuideLang || !guideLinks[selectedGuideLang] || !guideLinks[selectedGuideLang].preview) {
+    alert("Sila pilih bahasa panduan terlebih dahulu.");
+    return;
+  }
+
+  window.open(guideLinks[selectedGuideLang].preview, "_blank", "noopener,noreferrer");
+}
+
+// =====================================================
+// RESET DOWNLOAD BUTTON
+// =====================================================
+
+function resetDownloadButton() {
+  const btn = document.getElementById("btn-guide-download");
+  const downloadWrapper = document.getElementById("btn-guide-download-wrapper");
+  const downloadIcon = document.getElementById("btn-guide-download-icon");
+  const loadingIcon = document.getElementById("btn-guide-loading-icon");
+
+  if (btn) {
+    btn.disabled = false;
+    btn.classList.remove("opacity-70");
+  }
+
+  if (downloadWrapper) {
+    downloadWrapper.classList.remove("cursor-wait", "cursor-not-allowed");
+    downloadWrapper.classList.add("cursor-pointer");
+  }
+
+  if (loadingIcon) loadingIcon.classList.add("hidden");
+  if (downloadIcon) downloadIcon.classList.remove("hidden");
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+// =====================================================
+// DOWNLOAD GUIDE
+// =====================================================
+
+function downloadGuide() {
+  if (!selectedGuideLang || !guideLinks[selectedGuideLang] || !guideLinks[selectedGuideLang].download) {
+    alert("Sila pilih bahasa panduan terlebih dahulu.");
+    return;
+  }
+
+  const btn = document.getElementById("btn-guide-download");
+  const downloadWrapper = document.getElementById("btn-guide-download-wrapper");
+  const downloadIcon = document.getElementById("btn-guide-download-icon");
+  const loadingIcon = document.getElementById("btn-guide-loading-icon");
+
+  const downloadUrl = guideLinks[selectedGuideLang].download;
+
+  // Start loading state
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add("opacity-70");
+    btn.classList.remove("pointer-events-none");
+  }
+
+  if (downloadWrapper) {
+    downloadWrapper.classList.remove("cursor-pointer", "cursor-not-allowed");
+    downloadWrapper.classList.add("cursor-wait");
+  }
+
+  if (downloadIcon) downloadIcon.classList.add("hidden");
+  if (loadingIcon) loadingIcon.classList.remove("hidden");
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+
+  // Remove old iframe
+  const oldFrame = document.getElementById("guide-download-frame");
+  if (oldFrame) oldFrame.remove();
+
+  // Silent download using hidden iframe
+  const iframe = document.createElement("iframe");
+  iframe.id = "guide-download-frame";
+  iframe.style.display = "none";
+  iframe.src = downloadUrl;
+
+  document.body.appendChild(iframe);
+
+  // Stop spinner after download trigger
+  setTimeout(() => {
+    resetDownloadButton();
+  }, 1800);
+}
+
+  // =====================================================
+  // CLOSE DROPDOWN WHEN CLICK OUTSIDE
+  // =====================================================
+
+  document.addEventListener("click", function (event) {
+    const btn = document.getElementById("guide-custom-select-btn");
+    const dropdown = document.getElementById("guide-custom-dropdown");
+    const chevron = document.getElementById("guide-select-chevron");
+
+    if (!btn || !dropdown) return;
+
+    if (!btn.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add("hidden");
+
+      if (chevron) {
+        chevron.classList.remove("rotate-180");
+      }
+
+      btn.classList.remove("border-[#c9d7d2]");
+    }
+  });
 
         // Jalankan pengesan apabila tetingkap diubahsuai
         window.addEventListener('load', () => {
