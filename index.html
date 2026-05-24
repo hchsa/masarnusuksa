@@ -1408,7 +1408,7 @@ dir="auto"
             tabs.forEach(tab => {
                 tab.btn.setAttribute('aria-selected', 'false');
                 tab.btn.classList.remove('text-[#369A36]');
-                tab.btn.classList.add('text-gray-600');
+                tab.btn.classList.add('text-gray-700');
 
                 const span = tab.btn.querySelector('.tab-indicator');
                 span.classList.remove('border-[#008000]');
@@ -1419,7 +1419,7 @@ dir="auto"
             const active = tabs.find(t => t.id === tabName);
 
             active.btn.setAttribute('aria-selected', 'true');
-            active.btn.classList.remove('text-gray-600');
+            active.btn.classList.remove('text-gray-700');
             active.btn.classList.add('text-[#369A36]');
 
             const activeSpan = active.btn.querySelector('.tab-indicator');
